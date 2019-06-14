@@ -54,6 +54,8 @@ if($stmt1 != 1){
             "ok_qty"=> $ok_qty,
             "rej_qty"=> $rej_qty,
         );
+
+
  
         array_push($Wrk_ctr_dashboard, $Wrk_ctr_dashboard_item);
     }
@@ -124,11 +126,12 @@ if($stmt1 != 1){
             array_push($Wrk_ctr_dashboard, $Wrk_ctr_dashboard_item);
         }
      
+        $status['details'] =$Wrk_ctr_dashboard;
         // set response code - 200 OK
         http_response_code(200);
      
         // show products data in json format
-        echo json_encode($Wrk_ctr_dashboard);
+        echo json_encode($status);
     }else{
      
         // set response code - 404 Not found
