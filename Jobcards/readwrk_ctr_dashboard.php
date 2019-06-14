@@ -65,7 +65,7 @@ if($stmt1 != 1){
         extract($row);
  
         $Wrk_ctr_dashboard_item1=array(
-            "present_dept"=> $present_dept,
+            "wrk_ctr_code"=> $wrk_ctr_code,
             "daily_target"=> $daily_target,
             "completed_cards"=> $completed_cards,
         
