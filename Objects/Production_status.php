@@ -44,7 +44,7 @@ class Production_status {
      LEFT OUTER JOIN( SELECT  ph.batch_no, ROUND(SUM(pi.qty)/12,0) as qty,ph.wrk_ctr_code FROM `tb_t_prod_h` ph JOIN tb_t_prod_i pi ON pi.batch_no=ph.batch_no AND pi.sl_no=ph.sl_no AND ph.qlty_type_code=500 GROUP BY pi.batch_no,pi.wrk_ctr_code ) ok on ok.batch_no = ph.batch_no
      JOIN tb_m_fg fg on fg.fg_code = jc.fg_code
      JOIN tb_m_customer c on c.cust_code = jc.cust_code
-     WHERE (date(ph.updated_at) between  DATE_FORMAT('2019-06-10' ,'%Y-%m-01') AND '2019-06-10' )
+     WHERE (date(ph.updated_at) between  DATE_FORMAT('$date' ,'%Y-%m-01') AND '$date' )
      GROUP  BY jc.batch_no ORDER BY jc.updated_at DESC";
     
     // prepare query statement
