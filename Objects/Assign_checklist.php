@@ -65,7 +65,10 @@ class Assign_checklist {
             }
 
         function read2(){
-        $query2 = "SELECT emp_id,role_code,frst_name FROM `tb_m_employee` where role_code = 103";
+            
+            include_once '../environment_variables/environment_variables.php';
+
+        $query2 = "SELECT emp_id,role_code,frst_name FROM `tb_m_employee` where role_code = '$role_code'";
         
         // prepare query statement
         $stmt2 = $this->conn->prepare($query2);

@@ -25,6 +25,8 @@ $num = $stmt->rowCount();
 // check if more than 0 record found
 if($num>0){
  
+    $data = json_decode(file_get_contents('php://input'), true);
+        $emp_name = $data['emp_name'];
     // products array
     $Operator_jobcards_arr=array();
    // $Jobcard_arr=array();
@@ -39,7 +41,9 @@ if($num>0){
         extract($row);
  
         $Operator_jobcards_item=array(
+            "emp_name" =>$emp_name,
             "batch_no" =>$batch_no,
+            "fg_code" =>$fg_code,
             "wrk_ctr_desc" =>$DEPT,
             "wrk_ctr_code" =>$DEPT_code,
             "ok_qty" =>$OK_QTY,
@@ -60,6 +64,7 @@ if($num>0){
  
     // show products data in json format
     echo json_encode($Operator_jobcards_arr);
+
 }else{
  
     // set response code - 404 Not found

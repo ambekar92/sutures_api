@@ -1,5 +1,6 @@
 
 <?php
+include_once '../Config/database.php';
 
 class jobcard_rejec_reas{
  

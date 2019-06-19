@@ -24,7 +24,7 @@ $num = $stmt->rowCount();
  
 // check if more than 0 record found
 if($num>0){
- 
+    
     // products array
     $Operator_efficiency_arr=array();
    // $Jobcard_arr=array();
