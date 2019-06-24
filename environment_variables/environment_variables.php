@@ -5,6 +5,8 @@ $status_code = 804;
 //assign check_list
 $role_code = 103;
 
+
+
 //for maindashboard jobcards report.
 
 $qlty_type_desc_ok = 'OK';
