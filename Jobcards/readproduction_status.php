@@ -43,6 +43,7 @@ if($num>0){
             "ord_qty" =>$ord_qty,
             "cust_name" =>$cust_name,
             "req_date" =>$req_date,
+            "plan" =>$plan,
             "type" =>$type,
             "batch_no" =>$batch_no,
             "STRAIGHT_CUT" =>$STRAIGHT_CUT,

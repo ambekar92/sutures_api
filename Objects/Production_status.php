@@ -16,7 +16,7 @@ class Production_status {
 
 
 
-     $query = "SELECT jc.fg_code,round(jc.total_qty/12,0) as ord_qty,c.cust_name,jc.req_date,fg.type,jc.batch_no,
+     $query = "SELECT jc.fg_code,round(jc.total_qty/12,0) as ord_qty,c.cust_name,jc.req_date,jc.plan,fg.type,jc.batch_no,
      MAX(IF(ph.wrk_ctr_code = 103001,  concat(DATE_FORMAT(ph.updated_at,'%d/%m'),' - (',(ok.qty),')'),' - '))STRAIGHT_CUT,
      MAX(IF(ph.wrk_ctr_code = 103002,  concat(DATE_FORMAT(ph.updated_at,'%d/%m'),' - (',(ok.qty),')'),' - '))ROUGH_POINTING,
      MAX(IF(ph.wrk_ctr_code = 103003,  concat(DATE_FORMAT(ph.updated_at,'%d/%m'),' - (',(ok.qty),')'),' - '))ENDCUT,
