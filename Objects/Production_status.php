@@ -45,7 +45,7 @@ class Production_status {
      JOIN tb_m_fg fg on fg.fg_code = jc.fg_code
      JOIN tb_m_customer c on c.cust_code = jc.cust_code
      WHERE (date(ph.updated_at) between  DATE_FORMAT('$date' ,'%Y-%m-01') AND '$date' )
-     GROUP  BY jc.batch_no ORDER BY jc.updated_at DESC";
+     GROUP  BY jc.batch_no ORDER BY jc.updated_at DESC,jc.batch_no ASC";
     
 
     // prepare query statement
@@ -94,7 +94,7 @@ class Production_status {
          JOIN tb_m_fg fg on fg.fg_code = jc.fg_code
          JOIN tb_m_customer c on c.cust_code = jc.cust_code
          WHERE (date(ph.updated_at) between  DATE_FORMAT('$date' ,'%Y-%m-01') AND '$date' )
-         GROUP  BY jc.batch_no ORDER BY jc.updated_at DESC";
+         GROUP  BY jc.batch_no ORDER BY jc.updated_at DESC,jc.batch_no ASC";
         
     
         // prepare query statement
