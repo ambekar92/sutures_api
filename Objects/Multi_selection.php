@@ -66,7 +66,7 @@ class Multi_selection{
    }
         
 if ($condition != "NO_VALUE" AND $batch = 1 ){
-     $query = "SELECT tb_t_job_status.batch_no,tb_m_jobcard.fg_code,tb_m_jobcard.cust_name,tb_m_jobcard.plan,tb_m_plan_type.plan_desc,if(tb_t_job_status.to_dept = A.present_dept,IFNULL(tb_t_job_status.to_dept_desc,'PACKING AND LABELLING'),IFNULL(tb_t_job_status.from_dept_desc,'STRAIGHT CUT'))as to_dept_desc,if(tb_t_job_status.to_dept = A.present_dept,IFNULL(U1.name,'NOT ASSIGNED'),'COMPLETED') as operator,if(tb_t_job_status.to_dept = A.present_dept,IFNULL(U2.name,'NOT ASSIGNED'),'COMPLETED')as team_lead ,date_format(tb_t_job_status.updated_at,'%d-%m-%Y %H:%i:%s') as updated_at from tb_t_job_status 
+     $query = "SELECT tb_t_job_status.batch_no,tb_m_jobcard.fg_code,if(tb_m_jobcard.urgent = 1,'URGENT','REGULAR') as type,tb_m_jobcard.cust_name,tb_m_jobcard.plan,tb_m_plan_type.plan_desc,if(tb_t_job_status.to_dept = A.present_dept,IFNULL(tb_t_job_status.to_dept_desc,'PACKING AND LABELLING'),IFNULL(tb_t_job_status.from_dept_desc,'STRAIGHT CUT'))as to_dept_desc,if(tb_t_job_status.to_dept = A.present_dept,IFNULL(U1.name,'NOT ASSIGNED'),'COMPLETED') as operator,if(tb_t_job_status.to_dept = A.present_dept,IFNULL(U2.name,'NOT ASSIGNED'),'COMPLETED')as team_lead ,date_format(tb_t_job_status.updated_at,'%d-%m-%Y %H:%i:%s') as updated_at from tb_t_job_status 
      JOIN tb_m_jobcard on tb_t_job_status.batch_no = tb_m_jobcard.batch_no 
      JOIN tb_m_plan_type on tb_m_plan_type.plan_code = tb_m_jobcard.plan_code 
      left OUTER join(select * from tb_t_job_card_trans where status_code = 802 and oper_status is null) A on A.batch_no = tb_t_job_status.batch_no and ((tb_t_job_status.to_dept = A.present_dept)or (tb_t_job_status.from_dept = A.present_dept))
@@ -77,7 +77,7 @@ if ($condition != "NO_VALUE" AND $batch = 1 ){
      GROUP BY tb_t_job_status.batch_no
      order by tb_t_job_status.updated_at desc";
 }elseif( $condition != "NO_VALUE"){
-     $query = "SELECT tb_t_job_status.batch_no,tb_m_jobcard.fg_code,tb_m_jobcard.cust_name,tb_m_jobcard.plan,tb_m_plan_type.plan_desc,if(tb_t_job_status.to_dept = A.present_dept,IFNULL(tb_t_job_status.to_dept_desc,'PACKING AND LABELLING'),IFNULL(tb_t_job_status.from_dept_desc,'STRAIGHT CUT'))as to_dept_desc,if(tb_t_job_status.to_dept = A.present_dept,IFNULL(U1.name,'NOT ASSIGNED'),'COMPLETED') as operator,if(tb_t_job_status.to_dept = A.present_dept,IFNULL(U2.name,'NOT ASSIGNED'),'COMPLETED')as team_lead ,date_format(tb_t_job_status.updated_at,'%d-%m-%Y %H:%i:%s') as updated_at from tb_t_job_status 
+     $query = "SELECT tb_t_job_status.batch_no,tb_m_jobcard.fg_code,if(tb_m_jobcard.urgent = 1,'URGENT','REGULAR') as type,tb_m_jobcard.cust_name,tb_m_jobcard.plan,tb_m_plan_type.plan_desc,if(tb_t_job_status.to_dept = A.present_dept,IFNULL(tb_t_job_status.to_dept_desc,'PACKING AND LABELLING'),IFNULL(tb_t_job_status.from_dept_desc,'STRAIGHT CUT'))as to_dept_desc,if(tb_t_job_status.to_dept = A.present_dept,IFNULL(U1.name,'NOT ASSIGNED'),'COMPLETED') as operator,if(tb_t_job_status.to_dept = A.present_dept,IFNULL(U2.name,'NOT ASSIGNED'),'COMPLETED')as team_lead ,date_format(tb_t_job_status.updated_at,'%d-%m-%Y %H:%i:%s') as updated_at from tb_t_job_status 
 JOIN tb_m_jobcard on tb_t_job_status.batch_no = tb_m_jobcard.batch_no 
 JOIN tb_m_plan_type on tb_m_plan_type.plan_code = tb_m_jobcard.plan_code 
 left OUTER join(select * from tb_t_job_card_trans where status_code = 802 and oper_status is null) A on A.batch_no = tb_t_job_status.batch_no and (tb_t_job_status.to_dept = A.present_dept)
@@ -88,7 +88,7 @@ LEFT JOIN users U2 on A.emp_id = U2.emp_id
 GROUP BY tb_t_job_status.batch_no
 order by tb_t_job_status.updated_at desc";
 }else{
-$query = "SELECT tb_t_job_status.batch_no,tb_m_jobcard.fg_code,tb_m_jobcard.cust_name,tb_m_jobcard.plan,tb_m_plan_type.plan_desc,if(tb_t_job_status.to_dept = A.present_dept,IFNULL(tb_t_job_status.to_dept_desc,'PACKING AND LABELLING'),IFNULL(tb_t_job_status.from_dept_desc,'STRAIGHT CUT'))as to_dept_desc,if(tb_t_job_status.to_dept = A.present_dept,IFNULL(U1.name,'NOT ASSIGNED'),'COMPLETED') as operator,if(tb_t_job_status.to_dept = A.present_dept,IFNULL(U2.name,'NOT ASSIGNED'),'COMPLETED')as team_lead ,date_format(tb_t_job_status.updated_at,'%d-%m-%Y %H:%i:%s') as updated_at from tb_t_job_status 
+$query = "SELECT tb_t_job_status.batch_no,tb_m_jobcard.fg_code,if(tb_m_jobcard.urgent = 1,'URGENT','REGULAR') as type,tb_m_jobcard.cust_name,tb_m_jobcard.plan,tb_m_plan_type.plan_desc,if(tb_t_job_status.to_dept = A.present_dept,IFNULL(tb_t_job_status.to_dept_desc,'PACKING AND LABELLING'),IFNULL(tb_t_job_status.from_dept_desc,'STRAIGHT CUT'))as to_dept_desc,if(tb_t_job_status.to_dept = A.present_dept,IFNULL(U1.name,'NOT ASSIGNED'),'COMPLETED') as operator,if(tb_t_job_status.to_dept = A.present_dept,IFNULL(U2.name,'NOT ASSIGNED'),'COMPLETED')as team_lead ,date_format(tb_t_job_status.updated_at,'%d-%m-%Y %H:%i:%s') as updated_at from tb_t_job_status 
 JOIN tb_m_jobcard on tb_t_job_status.batch_no = tb_m_jobcard.batch_no 
 JOIN tb_m_plan_type on tb_m_plan_type.plan_code = tb_m_jobcard.plan_code 
 left OUTER join(select * from tb_t_job_card_trans where status_code = 802 and oper_status is null) A on A.batch_no = tb_t_job_status.batch_no and (tb_t_job_status.to_dept = A.present_dept)

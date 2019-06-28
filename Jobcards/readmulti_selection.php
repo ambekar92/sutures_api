@@ -41,6 +41,7 @@ if($num>0){
         $Multi_selection_item=array(
             "Batch_no" => $batch_no,
             "Size"=> $fg_code,
+            "type"=> $type,
             "Customer"=> $cust_name,
             "Plan"=> $plan,
             "plan_desc"=> $plan_desc,
