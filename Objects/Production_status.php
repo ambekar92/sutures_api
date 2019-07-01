@@ -17,6 +17,7 @@ class Production_status {
 
 
      $query = "SELECT jc.fg_code,round(jc.total_qty/12,0) as ord_qty,c.cust_name,jc.req_date,jc.plan,fg.type,jc.batch_no,
+     concat(jc.ord_qty,'|',(MIN(ok.qty)*12))as op_qty,
      MAX(IF(ph.wrk_ctr_code = 103001,  DATE_FORMAT(ph.updated_at,'%d/%m'),' - '))STRAIGHT_CUT,
      MAX(IF(ph.wrk_ctr_code = 103002,  DATE_FORMAT(ph.updated_at,'%d/%m'),' - '))ROUGH_POINTING,
      MAX(IF(ph.wrk_ctr_code = 103003,  DATE_FORMAT(ph.updated_at,'%d/%m'),' - '))ENDCUT,
@@ -38,7 +39,8 @@ class Production_status {
      MAX(IF(ph.wrk_ctr_code = 103019,  DATE_FORMAT(ph.updated_at,'%d/%m'),' - '))MICRO,
      MAX(IF(ph.wrk_ctr_code = 103020,  DATE_FORMAT(ph.updated_at,'%d/%m'),' - '))INSPECTION,
      MAX(IF(ph.wrk_ctr_code = 103021,  DATE_FORMAT(ph.updated_at,'%d/%m'),' - ')) PACKING_LABELLING,
-     MAX(IF(ph.wrk_ctr_code = 103023,  DATE_FORMAT(ph.updated_at,'%d/%m'),' - '))EDM
+     MAX(IF(ph.wrk_ctr_code = 103023,  DATE_FORMAT(ph.updated_at,'%d/%m'),' - '))EDM,
+     MAX(IF(ph.wrk_ctr_code = 103021,  '1','0')) color
      FROM    tb_m_jobcard jc
      LEFT OUTER JOIN  tb_t_prod_i ph  on ph.batch_no = jc.batch_no
      LEFT OUTER JOIN( SELECT  ph.batch_no, ROUND(SUM(pi.qty)/12,0) as qty,ph.wrk_ctr_code FROM `tb_t_prod_h` ph JOIN tb_t_prod_i pi ON pi.batch_no=ph.batch_no AND pi.sl_no=ph.sl_no AND ph.qlty_type_code=500 GROUP BY pi.batch_no,pi.wrk_ctr_code ) ok on ok.batch_no = ph.batch_no and  ok.wrk_ctr_code = ph.wrk_ctr_code
@@ -66,6 +68,7 @@ class Production_status {
     
     
          $query1 = "SELECT jc.fg_code,round(jc.total_qty/12,0) as ord_qty,c.cust_name,jc.req_date,jc.plan,fg.type,jc.batch_no,
+         concat(jc.ord_qty,'|',(MIN(ok.qty)*12))as op_qty,
          MAX(IF(ph.wrk_ctr_code = 103001,  (ok.qty),' - '))STRAIGHT_CUT,
          MAX(IF(ph.wrk_ctr_code = 103002,  (ok.qty),' - '))ROUGH_POINTING,
          MAX(IF(ph.wrk_ctr_code = 103003,  (ok.qty),' - '))ENDCUT,

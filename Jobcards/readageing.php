@@ -41,8 +41,9 @@ if($num>0){
         $ageing_item=array(
             "Jobcard" => $batch_no,
             "Size"    => $fg_code,
-            "Department"=> $to_dept_desc,
-            "Employee_name"=> $emp,
+            "Department"=> $dept_desc,
+            "team_lead"=> $team_lead,
+            "operator"=> $operator,
             "Idle_from"=> $updated_at,
         );
  

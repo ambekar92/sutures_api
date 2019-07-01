@@ -46,8 +46,11 @@ if($num>0){
             "Plan"=> $plan,
             "plan_desc"=> $plan_desc,
             "Current_dept"=> $to_dept_desc,
+            "ack_status"=> $ack_status,
             "Team_lead"=> $team_lead,
+            "Team_lead_id"=> $team_lead_id,
             "Operator"=> $operator,
+            "Operator_id"=> $operator_id,
             "Updated_at"=> $updated_at,
         
         );

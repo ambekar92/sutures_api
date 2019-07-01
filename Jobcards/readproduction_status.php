@@ -49,6 +49,7 @@ if($num>0){
             "plan" =>$plan,
             "type" =>$type,
             "batch_no" =>$batch_no,
+            "op_qty" =>$op_qty,
             "STRAIGHT_CUT" =>$STRAIGHT_CUT,
             "ROUGH_POINTING" =>$ROUGH_POINTING,
             "ENDCUT" =>$ENDCUT,
@@ -71,6 +72,7 @@ if($num>0){
             "INSPECTION" =>$INSPECTION,
             "PACKING_LABELLING" =>$PACKING_LABELLING,
             "EDM" =>$EDM,
+            "color" =>$color,
         );
  
         array_push($Production_status_arr, $Production_status_item);
@@ -90,6 +92,7 @@ if($num>0){
             "plan" =>$plan,
             "type" =>$type,
             "batch_no" =>$batch_no,
+            "op_qty" =>$op_qty,
             "STRAIGHT_CUT" =>$STRAIGHT_CUT,
             "ROUGH_POINTING" =>$ROUGH_POINTING,
             "ENDCUT" =>$ENDCUT,

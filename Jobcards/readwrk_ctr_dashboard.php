@@ -118,6 +118,7 @@ if($stmt1 != 1){
                 "batch_no"=> $batch_no,
                 "fg_code"=> $fg_code,
                 "operator"=> $operator,
+                "operator_id"=> $operator_id,
                 "on_off"=> $on_off,
                 "ok_qty"=> $ok_qty,
                 "rej_qty"=> $rej_qty,
