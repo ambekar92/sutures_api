@@ -40,6 +40,7 @@ class Jobcard{
     
 
     return $stmt;
+    
         }
  
 
