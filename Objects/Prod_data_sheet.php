@@ -34,9 +34,8 @@ class Prod_data_sheet {
         JOIN users u1 on T.emp_id = u1.emp_id 
         JOIN ( SELECT ph.mach_code, ph.batch_no, SUM(pi.qty) as qty, ph.emp_id, ph.created_at,ph.wrk_ctr_code FROM `tb_t_prod_h` ph 
         JOIN tb_t_prod_i pi ON pi.batch_no=ph.batch_no AND pi.sl_no=ph.sl_no AND ph.qlty_type_code=500 group by ph.emp_id,ph.batch_no,ph.wrk_ctr_code ) AS q ON A.present_mach=q.mach_code AND A.batch_no = q.batch_no and A.emp_id = q.emp_id
-        left OUTER join ( SELECT ph.mach_code, ph.batch_no, SUM(pi.qty) as qty FROM `tb_t_prod_h` ph 
-        JOIN tb_t_prod_i pi ON pi.batch_no=ph.batch_no AND pi.sl_no=ph.sl_no AND ph.qlty_type_code=502 group by ph.emp_id,ph.batch_no,ph.wrk_ctr_code  ) AS r ON A.present_mach=r.mach_code AND A.batch_no = r.batch_no  and A.emp_id = q.emp_id
-        join tb_m_machine mc on  A.present_mach = mc.mach_code    
+        left OUTER join ( SELECT ph.mach_code, ph.batch_no, SUM(pi.qty) as qty,ph.emp_id FROM `tb_t_prod_h` ph 
+        JOIN tb_t_prod_i pi ON pi.batch_no=ph.batch_no AND pi.sl_no=ph.sl_no  AND ph.qlty_type_code=502 group by ph.emp_id,ph.batch_no,ph.wrk_ctr_code  ) AS r ON A.present_mach=r.mach_code AND A.batch_no = r.batch_no  and r.emp_id = q.emp_id and A.emp_id = q.emp_id    
         where A.batch_no = '$batch_no' group by A.emp_id,A.present_mach order by A.sl_no";
 
         
