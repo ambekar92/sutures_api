@@ -42,6 +42,7 @@ $num = $stmt->rowCount();
                 "wrk_ctr_code" => $wrk_ctr_code,
                 "wrk_ctr_desc"=> $wrk_ctr_desc,
                 "mach_code"=> $mach_code,
+                "mach_desc"=> $mach_desc,
                 "availability_perc"=> $availability_perc,
                 "performance_perc"=> $performance_perc,
                 "quality_perc"=> $quality_perc,

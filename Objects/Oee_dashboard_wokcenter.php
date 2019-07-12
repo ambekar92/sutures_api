@@ -22,8 +22,9 @@ class Oee_dashboard_workcenter{
             $date = $data['date'];
         
     
-             $query = "SELECT tb_o_workcenter.wrk_ctr_code,tb_o_workcenter.wrk_ctr_desc,mach_code,availability_perc,performance_perc,quality_perc,oee_perc FROM `tb_t_oee`
-                join tb_o_workcenter on tb_t_oee.wrk_ctr_code = tb_o_workcenter.wrk_ctr_code WHERE date_ = '$date' AND tb_t_oee.wrk_ctr_code = '$wrk_ctr_code'";
+             $query = "SELECT tb_o_workcenter.wrk_ctr_code,tb_o_workcenter.wrk_ctr_desc,tb_m_machine.mach_code,tb_m_machine.mach_desc,availability_perc,performance_perc,quality_perc,oee_perc FROM `tb_t_oee`
+           join tb_o_workcenter on tb_t_oee.wrk_ctr_code = tb_o_workcenter.wrk_ctr_code 
+           join tb_m_machine on tb_m_machine.mach_code = tb_t_oee.mach_code WHERE date_ = '$date' AND tb_t_oee.wrk_ctr_code = '$wrk_ctr_code'";
         
     // prepare query statement
     $stmt = $this->conn->prepare($query);
