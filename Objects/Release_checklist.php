@@ -30,7 +30,7 @@ class Release_checklist {
     $query = "update `tb_t_mach_check_h` set released_date = '$released_date',released_remarks = '$released_remarks',released_by = '$released_by',release_for_production ='$release_for_production',assigned_status = '$assigned_status' where ticket = '$ticket' and machine_check_h_code = '$machine_check_h_code'";
 
     
-    $query1 = "UPDATE tb_t_mach_status_event SET  on_off_status = IF((SELECT COUNT(*)as cnt FROM `tb_t_mach_check_h` where machine_code ='$machine_code' and release_for_production = 'NO') > 0 , 1, 0) 
+    $query1 = "UPDATE tb_t_mach_status_event SET  on_off_status = IF((SELECT COUNT(*)as cnt FROM `tb_t_mach_check_h` where machine_code ='$machine_code' and release_for_production = 'NO') > 0 , 0, 1) 
     WHERE mach_code = '$machine_code'";
      
 

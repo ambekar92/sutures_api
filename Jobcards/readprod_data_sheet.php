@@ -109,6 +109,6 @@ if($num>0){
     // show products data in json format
     $status['data'] =[];
     $status['details'] =$Prod_data_sheet_item1;
-    echo json_encode($status    );
+    echo json_encode($status );
 }
 

@@ -34,7 +34,7 @@ class Assign_update {
      }
     
     
-      $query1 = "UPDATE tb_t_mach_status_event SET  on_off_status = IF((SELECT COUNT(*)as cnt FROM `tb_t_mach_check_h` where machine_code = '$machine_code' and release_for_production = 'NO') > 0 , 1, 0) 
+      $query1 = "UPDATE tb_t_mach_status_event SET  on_off_status = IF((SELECT COUNT(*)as cnt FROM `tb_t_mach_check_h` where machine_code = '$machine_code' and release_for_production = 'NO') > 0 , 0, 1) 
         WHERE mach_code = '$machine_code'";
 
     // prepare query statement

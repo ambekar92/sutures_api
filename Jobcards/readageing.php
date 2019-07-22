@@ -44,7 +44,10 @@ if($num>0){
             "Department"=> $dept_desc,
             "team_lead"=> $team_lead,
             "operator"=> $operator,
-            "Idle_from"=> $updated_at,
+            "created_on"=>$created_on,
+            "Idle_from"=> $idle_from,
+            "jobcard_cyl_days"=>$jobcard_cyl_days,
+            "no_of_idle_days"=>$no_of_idle_days,
         );
  
         array_push($ageing_arr, $ageing_item);

@@ -19,7 +19,7 @@ class Assign_mach_status {
 
      $machine_code = $data['machine_code'];
 
-        $query = "UPDATE tb_t_mach_status_event SET  on_off_status = IF((SELECT COUNT(*)as cnt FROM `tb_t_mach_check_h` where machine_code = '$machine_code' and release_for_production = 'NO') > 0 , 1, 0) 
+        $query = "UPDATE tb_t_mach_status_event SET  on_off_status = IF((SELECT COUNT(*)as cnt FROM `tb_t_mach_check_h` where machine_code = '$machine_code' and release_for_production = 'NO') > 0 , 0, 1) 
         WHERE mach_code = '$machine_code'";
     
     

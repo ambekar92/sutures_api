@@ -25,9 +25,11 @@ class Wrk_ctr_dashboard{
               if ($wrk_ctr_code == "NULL"){
             $query = "SELECT D.wrk_ctr_code,D.wrk_ctr_desc,count(M.mach_code)as machine,ifnull(jp.U_pending_cards,0)as U_pending_cards,ifnull(jp.R_pending_cards,0)as R_pending_cards,ifnull(A.U_completed_cards,0)as U_completed_cards,ifnull(A.R_completed_cards,0)as R_completed_cards ,ifnull(ROUND((B.OK_Qnty)/12,2),0) as ok_qty,ifnull(ROUND((B.Reject_Qnty)/12,2),0) as rej_qty from tb_o_workcenter D
             JOIN tb_m_machine M on D.wrk_ctr_code = M.wrk_ctr_code
-            left join (SELECT count((case when tb_m_jobcard.urgent = 1 then tb_m_jobcard.batch_no end)) as u_pending_cards,
-                      count((case when tb_m_jobcard.urgent = 0 then tb_m_jobcard.batch_no end)) as R_pending_cards,
-                       to_dept from tb_t_job_status join tb_m_jobcard on tb_t_job_status.batch_no = tb_m_jobcard.batch_no where status_code != '801'  group by to_dept)                          jp on jp.to_dept = D.wrk_ctr_code 
+            left join (SELECT count((case when tb_m_jobcard.urgent = 0 then tb_m_jobcard.batch_no end)) as R_pending_cards,
+                              count((case when tb_m_jobcard.urgent = 1 then tb_m_jobcard.batch_no end)) as u_pending_cards, 
+                       to_dept from tb_t_job_status 
+                       join tb_m_jobcard on tb_t_job_status.batch_no = tb_m_jobcard.batch_no
+                       JOIN(select batch_no,present_dept from tb_t_job_card_trans GROUP BY batch_no,present_dept )tb_t_job_card_trans  on tb_t_job_status.batch_no = tb_t_job_card_trans.batch_no and tb_t_job_status.to_dept = tb_t_job_card_trans.present_dept  group by tb_t_job_card_trans.present_dept)jp on jp.to_dept = D.wrk_ctr_code 
             left join (SELECT Count((case when tb_m_jobcard.urgent = 1 then tb_m_jobcard.batch_no end)) as u_completed_cards,
        Count((case when tb_m_jobcard.urgent = 0 then tb_m_jobcard.batch_no end)) as R_completed_cards,present_dept  FROM `tb_t_job_card_trans` join tb_m_jobcard on tb_m_jobcard.batch_no = tb_t_job_card_trans.batch_no where status_code = 803 and oper_status = 807  and  date(tb_t_job_card_trans.updated_at) = '$date' group by present_dept) A on A.present_dept = D.wrk_ctr_code
             left OUTER join (SELECT IFNULL(SUM(CASE WHEN qlty_type_desc =  'OK' THEN tb_t_prod_i.qty END), 0) OK_Qnty, IFNULL(SUM(CASE WHEN qlty_type_desc =  'REJECT' THEN tb_t_prod_i.qty END), 0) Reject_Qnty,tb_t_prod_i.wrk_ctr_code FROM tb_t_prod_i JOIN tb_m_qlty_code on tb_t_prod_i.qlty_code = tb_m_qlty_code.qlty_code  JOIN tb_m_qlty_type on tb_m_qlty_type.qlty_type_code = tb_m_qlty_code.qlty_type_code where tb_m_qlty_type.qlty_type_code in (500,502) and date(tb_t_prod_i.updated_at) = '$date'group by tb_t_prod_i.wrk_ctr_code ) B on B.wrk_ctr_code  = D.wrk_ctr_code

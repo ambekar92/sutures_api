@@ -31,7 +31,11 @@ $num = $stmt->rowCount();
             // this will make $row['name'] to
             // just $name only
             extract($row);
-     
+            $aval_color = $Oee_dashboard_mach->color_range(round($availability_perc));
+            $perf_color = $Oee_dashboard_mach->color_range(round($performance_perc));
+            $qlty_color = $Oee_dashboard_mach->color_range(round($quality_perc));
+            $oee_color = $Oee_dashboard_mach->color_range(round($oee_perc));
+
             $Oee_dashboard_item=array(
                 "wrk_ctr_code" => $wrk_ctr_code,
                 "wrk_ctr_desc"=> $wrk_ctr_desc,
@@ -49,10 +53,14 @@ $num = $stmt->rowCount();
                 "total_count"=> $total_count,
                 "ok_qty"=> $ok_qty,
                 "rej_qty"=> $rej_qty,
-                "availability_perc"=> $availability_perc,
-                "performance_perc"=> $performance_perc,
-                "quality_perc"=> $quality_perc,
-                "oee_perc "=> $oee_perc,
+                "availability_perc"=> (int) $availability_perc,
+                "performance_perc"=> (int)  $performance_perc,
+                "quality_perc"=> (int) $quality_perc,
+                "oee_perc "=> (int) $oee_perc,
+                "availability_color"=> $aval_color,
+                "performance_color"=> $perf_color,
+                "quality_color"=> $qlty_color,
+                "oee_color"=>$oee_color,
 
             );
     
@@ -65,7 +73,7 @@ $num = $stmt->rowCount();
     // set response code - 200 OK
     http_response_code(200);
     // show products data in json format
-    $status[] =$Oee_dashboard;
+    $status['details'] =$Oee_dashboard;
     echo json_encode($status);
 }else{
  
