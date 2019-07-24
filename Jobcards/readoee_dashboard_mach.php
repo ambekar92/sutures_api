@@ -41,6 +41,7 @@ $num = $stmt->rowCount();
                 "wrk_ctr_desc"=> $wrk_ctr_desc,
                 "mach_code"=> $mach_code,
                 "mach_desc"=> $mach_desc,
+                "on_off"=> $on_off,
                 "batch_no"=> $batch_no,
                 "fg_code"=> $fg_code,
                 "operator"=> $operator,
@@ -56,15 +57,13 @@ $num = $stmt->rowCount();
                 "availability_perc"=> (int) $availability_perc,
                 "performance_perc"=> (int)  $performance_perc,
                 "quality_perc"=> (int) $quality_perc,
-                "oee_perc "=> (int) $oee_perc,
+                "oee_perc"=> (int) $oee_perc,
                 "availability_color"=> $aval_color,
                 "performance_color"=> $perf_color,
                 "quality_color"=> $qlty_color,
                 "oee_color"=>$oee_color,
 
             );
-    
-    
      
             array_push($Oee_dashboard, $Oee_dashboard_item);
         }
