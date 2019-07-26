@@ -32,6 +32,8 @@ $num = $stmt->rowCount();
 
    
      if($stmt1 == 'ALL_DAILY' ){
+
+
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             // extract row
             // this will make $row['name'] to
@@ -45,12 +47,12 @@ $num = $stmt->rowCount();
                 "availability_perc"=> $availability_perc,
                 "performance_perc"=> $performance_perc,
                 "quality_perc"=> $quality_perc,
-                "oee_perc "=> $oee_perc,
+                "oee_perc"=> $oee_perc,
             );
     
-
             array_push($Oee_history, $Oee_history_item);
         }
+
      }else if( $stmt1 == 'ALL_WEEKLY' ){
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
@@ -66,7 +68,7 @@ $num = $stmt->rowCount();
                 "availability_perc"=> $availability_perc,
                 "performance_perc"=> $performance_perc,
                 "quality_perc"=> $quality_perc,
-                "oee_perc "=> $oee_perc,
+                "oee_perc"=> $oee_perc,
             );
     
 
@@ -89,7 +91,7 @@ $num = $stmt->rowCount();
                 "availability_perc"=> $availability_perc,
                 "performance_perc"=> $performance_perc,
                 "quality_perc"=> $quality_perc,
-                "oee_perc "=> $oee_perc,
+                "oee_perc"=> $oee_perc,
             );
     
 
@@ -112,7 +114,7 @@ $num = $stmt->rowCount();
                 "availability_perc"=> $availability_perc,
                 "performance_perc"=> $performance_perc,
                 "quality_perc"=> $quality_perc,
-                "oee_perc "=> $oee_perc,
+                "oee_perc"=> $oee_perc,
             );
     
 
@@ -135,7 +137,7 @@ $num = $stmt->rowCount();
                 "availability_perc"=> $availability_perc,
                 "performance_perc"=> $performance_perc,
                 "quality_perc"=> $quality_perc,
-                "oee_perc "=> $oee_perc,
+                "oee_perc"=> $oee_perc,
             );
     
             array_push($Oee_history, $Oee_history_item);
@@ -159,10 +161,9 @@ $num = $stmt->rowCount();
                 "availability_perc"=> $availability_perc,
                 "performance_perc"=> $performance_perc,
                 "quality_perc"=> $quality_perc,
-                "oee_perc "=> $oee_perc,
+                "oee_perc"=> $oee_perc,
             );
     
-
             array_push($Oee_history, $Oee_history_item);
         }
          
@@ -175,6 +176,7 @@ $num = $stmt->rowCount();
             extract($row);
      
             $Oee_history_item=array(
+                "date"=>$date_,
                 "wrk_ctr_code" => $wrk_ctr_code,
                 "wrk_ctr_desc"=> $wrk_ctr_desc,
                 "mach_code"=> $mach_code,
@@ -190,7 +192,7 @@ $num = $stmt->rowCount();
                 "availability_perc"=> $availability_perc,
                 "performance_perc"=> $performance_perc,
                 "quality_perc"=> $quality_perc,
-                "oee_perc "=> $oee_perc,
+                "oee_perc"=> $oee_perc,
             );
     
 
@@ -222,7 +224,7 @@ $num = $stmt->rowCount();
                 "availability_perc"=> $availability_perc,
                 "performance_perc"=> $performance_perc,
                 "quality_perc"=> $quality_perc,
-                "oee_perc "=> $oee_perc,
+                "oee_perc"=> $oee_perc,
             );
     
 
@@ -255,7 +257,7 @@ $num = $stmt->rowCount();
                 "availability_perc"=> $availability_perc,
                 "performance_perc"=> $performance_perc,
                 "quality_perc"=> $quality_perc,
-                "oee_perc "=> $oee_perc,
+                "oee_perc"=> $oee_perc,
             );
     
 

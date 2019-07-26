@@ -40,6 +40,10 @@ if($num>0){
         // this will make $row['name'] to
         // just $name only
         extract($row);
+
+       $batch=explode("_",$batch_no);
+       //print_r($batch);
+       $batch_number=$batch[0];
  
         $Production_status_item=array(
             "fg_code" =>$fg_code,
@@ -49,6 +53,7 @@ if($num>0){
             "plan" =>$plan,
             "type" =>$type,
             "batch_no" =>$batch_no,
+            "batch" =>$batch_number,
             "op_qty" =>$op_qty,
             "STRAIGHT_CUT" =>$STRAIGHT_CUT,
             "ROUGH_POINTING" =>$ROUGH_POINTING,
@@ -73,6 +78,7 @@ if($num>0){
             "PACKING_LABELLING" =>$PACKING_LABELLING,
             "EDM" =>$EDM,
             "color" =>$color,
+            "completed" =>$completed,
         );
  
         array_push($Production_status_arr, $Production_status_item);
@@ -84,6 +90,10 @@ if($num>0){
         // just $name only
         extract($row);
  
+        $batch=explode("_",$batch_no);
+       //print_r($batch);
+        $batch_number=$batch[0];
+
         $Production_status_item1=array(
             "fg_code" =>$fg_code,
             "ord_qty" =>$ord_qty,
@@ -92,6 +102,7 @@ if($num>0){
             "plan" =>$plan,
             "type" =>$type,
             "batch_no" =>$batch_no,
+            "batch" =>$batch_number,
             "op_qty" =>$op_qty,
             "STRAIGHT_CUT" =>$STRAIGHT_CUT,
             "ROUGH_POINTING" =>$ROUGH_POINTING,
@@ -116,6 +127,8 @@ if($num>0){
             "PACKING_LABELLING" =>$PACKING_LABELLING,
             "EDM" =>$EDM,
         );
+
+      //  print_r($Production_status_item1);
  
         array_push($Production_status_arr1, $Production_status_item1);
     }

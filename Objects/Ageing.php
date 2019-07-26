@@ -33,7 +33,7 @@ class ageing{
     left OUTER join(select * from tb_t_job_card_trans where (status_code = 803 and oper_status = 807) or (status_code = 802 and oper_status = 806) ) B on B.batch_no = js.batch_no and                   js.to_dept = B.present_dept 
    LEFT JOIN users U1 on B.emp_id = U1.emp_id 
    LEFT JOIN users U2 on A.emp_id = U2.emp_id 
-   where js.status_code <> '$status_code' and date(js.updated_at) < DATE_SUB( '$date',INTERVAL 10 DAY) ORDER BY updated_at ASC";
+   where js.status_code <> '$status_code' and date(js.updated_at) < DATE_SUB( '$date',INTERVAL 10 DAY) ORDER BY jc.updated_at ASC";
  
     // prepare query statement
     $stmt = $this->conn->prepare($query);
