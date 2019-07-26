@@ -44,10 +44,10 @@ $num = $stmt->rowCount();
                 "wrk_ctr_code" => $wrk_ctr_code,
                 "wrk_ctr_desc"=> $wrk_ctr_desc,
                 "date_"=> $date_,
-                "availability_perc"=> $availability_perc,
-                "performance_perc"=> $performance_perc,
-                "quality_perc"=> $quality_perc,
-                "oee_perc"=> $oee_perc,
+                "availability_perc"=>round($availability_perc,2),
+                "performance_perc"=> round($performance_perc,2),
+                "quality_perc"=> round($quality_perc,2),
+                "oee_perc"=> round($oee_perc,2),
             );
     
             array_push($Oee_history, $Oee_history_item);
@@ -65,10 +65,10 @@ $num = $stmt->rowCount();
                 "wrk_ctr_code" => $wrk_ctr_code,
                 "wrk_ctr_desc"=> $wrk_ctr_desc,
                 "weekly"=> $weekly,
-                "availability_perc"=> $availability_perc,
-                "performance_perc"=> $performance_perc,
-                "quality_perc"=> $quality_perc,
-                "oee_perc"=> $oee_perc,
+                "availability_perc"=>round($availability_perc,2),
+                "performance_perc"=> round($performance_perc,2),
+                "quality_perc"=> round($quality_perc,2),
+                "oee_perc"=> round($oee_perc,2),
             );
     
 
@@ -88,10 +88,10 @@ $num = $stmt->rowCount();
                 "month_desc"=> $month_desc,
                 "wrk_ctr_code" => $wrk_ctr_code,
                 "wrk_ctr_desc"=> $wrk_ctr_desc,
-                "availability_perc"=> $availability_perc,
-                "performance_perc"=> $performance_perc,
-                "quality_perc"=> $quality_perc,
-                "oee_perc"=> $oee_perc,
+                "availability_perc"=>round($availability_perc,2),
+                "performance_perc"=> round($performance_perc,2),
+                "quality_perc"=> round($quality_perc,2),
+                "oee_perc"=> round($oee_perc,2),
             );
     
 
@@ -111,10 +111,10 @@ $num = $stmt->rowCount();
                 "wrk_ctr_desc"=> $wrk_ctr_desc,
                 "mach_code"=> $mach_code,
                 "mach_desc"=> $mach_desc,
-                "availability_perc"=> $availability_perc,
-                "performance_perc"=> $performance_perc,
-                "quality_perc"=> $quality_perc,
-                "oee_perc"=> $oee_perc,
+                "availability_perc"=>round( $availability_perc,2),
+                "performance_perc"=> round($performance_perc,2),
+                "quality_perc"=> round($quality_perc,2),
+                "oee_perc"=> round($oee_perc,2),
             );
     
 
@@ -134,10 +134,10 @@ $num = $stmt->rowCount();
                 "wrk_ctr_desc"=> $wrk_ctr_desc,
                 "mach_code"=> $mach_code,
                 "mach_desc"=> $mach_desc,
-                "availability_perc"=> $availability_perc,
-                "performance_perc"=> $performance_perc,
-                "quality_perc"=> $quality_perc,
-                "oee_perc"=> $oee_perc,
+                "availability_perc"=>round( $availability_perc,2),
+                "performance_perc"=> round($performance_perc,2),
+                "quality_perc"=> round($quality_perc,2),
+                "oee_perc"=> round($oee_perc,2),
             );
     
             array_push($Oee_history, $Oee_history_item);
@@ -158,10 +158,10 @@ $num = $stmt->rowCount();
                 "mach_desc"=> $mach_desc,
                 "_month"=> $_month,
                 "month_desc"=> $month_desc,
-                "availability_perc"=> $availability_perc,
-                "performance_perc"=> $performance_perc,
-                "quality_perc"=> $quality_perc,
-                "oee_perc"=> $oee_perc,
+                "availability_perc"=>round( $availability_perc,2),
+                "performance_perc"=> round($performance_perc,2),
+                "quality_perc"=> round($quality_perc,2),
+                "oee_perc"=> round($oee_perc,2),
             );
     
             array_push($Oee_history, $Oee_history_item);
@@ -189,10 +189,10 @@ $num = $stmt->rowCount();
                 "total_count"=> $total_count,
                 "ok_qty"=> $ok_qty,
                 "rej_qty"=> $rej_qty,
-                "availability_perc"=> $availability_perc,
-                "performance_perc"=> $performance_perc,
-                "quality_perc"=> $quality_perc,
-                "oee_perc"=> $oee_perc,
+                "availability_perc"=>round( $availability_perc,2),
+                "performance_perc"=> round($performance_perc,2),
+                "quality_perc"=> round($quality_perc,2),
+                "oee_perc"=> round($oee_perc,2),
             );
     
 
@@ -221,10 +221,10 @@ $num = $stmt->rowCount();
                 "total_count"=> $total_count,
                 "ok_qty"=> $ok_qty,
                 "rej_qty"=> $rej_qty,
-                "availability_perc"=> $availability_perc,
-                "performance_perc"=> $performance_perc,
-                "quality_perc"=> $quality_perc,
-                "oee_perc"=> $oee_perc,
+                "availability_perc"=>round( $availability_perc,2),
+                "performance_perc"=> round($performance_perc,2),
+                "quality_perc"=> round($quality_perc,2),
+                "oee_perc"=> round($oee_perc,2),
             );
     
 
@@ -254,10 +254,10 @@ $num = $stmt->rowCount();
                 "total_count"=> $total_count,
                 "ok_qty"=> $ok_qty,
                 "rej_qty"=> $rej_qty,
-                "availability_perc"=> $availability_perc,
-                "performance_perc"=> $performance_perc,
-                "quality_perc"=> $quality_perc,
-                "oee_perc"=> $oee_perc,
+                "availability_perc"=>round( $availability_perc,2),
+                "performance_perc"=> round($performance_perc,2),
+                "quality_perc"=> round($quality_perc,2),
+                "oee_perc"=> round($oee_perc,2),
             );
     
 
