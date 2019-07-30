@@ -16,7 +16,7 @@ class Production_status {
 
 
 
-     $query = "SELECT jc.fg_code,round(jc.total_qty/12,0) as ord_qty,c.cust_name,jc.req_date,jc.plan,fg.type,jc.batch_no,
+     $query = "SELECT jc.fg_code,round(jc.total_qty/12,0) as ord_qty,c.cust_name,jc.req_date,jc.plan,tb_m_plan_type.plan_desc,fg.type,jc.batch_no,
      concat(jc.ord_qty,'|',(MIN(ok.qty)*12))as op_qty,
      MAX(IF(ph.wrk_ctr_code = 103001,  DATE_FORMAT(ph.updated_at,'%d/%m'),' - '))STRAIGHT_CUT,
      MAX(IF(ph.wrk_ctr_code = 103002,  DATE_FORMAT(ph.updated_at,'%d/%m'),' - '))ROUGH_POINTING,
@@ -47,6 +47,7 @@ class Production_status {
      LEFT OUTER JOIN( SELECT  ph.batch_no, ROUND(SUM(pi.qty)/12,0) as qty,ph.wrk_ctr_code FROM `tb_t_prod_h` ph JOIN tb_t_prod_i pi ON pi.batch_no=ph.batch_no AND pi.sl_no=ph.sl_no AND ph.qlty_type_code=500 GROUP BY pi.batch_no,pi.wrk_ctr_code ) ok on ok.batch_no = ph.batch_no and  ok.wrk_ctr_code = ph.wrk_ctr_code
      JOIN tb_m_fg fg on fg.fg_code = jc.fg_code
      JOIN tb_m_customer c on c.cust_code = jc.cust_code
+     JOIN tb_m_plan_type on jc.plan_code = tb_m_plan_type.plan_code
      WHERE (date(ph.updated_at) between  DATE_FORMAT('$date' ,'%Y-%(m-3)-01') AND '$date' )
      GROUP  BY jc.batch_no ORDER BY jc.updated_at DESC,jc.batch_no ASC";
     
@@ -65,7 +66,7 @@ class Production_status {
             $data = json_decode(file_get_contents('php://input'), true);
             $date = $data['date'];
     
-        $query1 = "SELECT jc.fg_code,round(jc.total_qty/12,0) as ord_qty,c.cust_name,jc.req_date,jc.plan,fg.type,jc.batch_no,
+        $query1 = "SELECT jc.fg_code,round(jc.total_qty/12,0) as ord_qty,c.cust_name,jc.req_date,jc.plan,tb_m_plan_type.plan_desc,fg.type,jc.batch_no,
          concat(jc.ord_qty,'|',(MIN(ok.qty)*12))as op_qty,
          MAX(IF(ph.wrk_ctr_code = 103001,  (ok.qty),' - '))STRAIGHT_CUT,
          MAX(IF(ph.wrk_ctr_code = 103002,  (ok.qty),' - '))ROUGH_POINTING,
@@ -94,6 +95,7 @@ class Production_status {
          LEFT OUTER JOIN( SELECT  ph.batch_no, ROUND(SUM(pi.qty)/12,0) as qty,ph.wrk_ctr_code FROM `tb_t_prod_h` ph JOIN tb_t_prod_i pi ON pi.batch_no=ph.batch_no AND pi.sl_no=ph.sl_no AND ph.qlty_type_code=500 GROUP BY pi.batch_no,pi.wrk_ctr_code ) ok on ok.batch_no = ph.batch_no and  ok.wrk_ctr_code = ph.wrk_ctr_code
          JOIN tb_m_fg fg on fg.fg_code = jc.fg_code
          JOIN tb_m_customer c on c.cust_code = jc.cust_code
+         JOIN tb_m_plan_type on jc.plan_code = tb_m_plan_type.plan_code
          WHERE (date(ph.updated_at) between  DATE_FORMAT(('$date' - INTERVAL 3 MONTH) ,'%Y-%m-01') AND '$date' )
          GROUP  BY jc.batch_no ORDER BY jc.updated_at DESC,jc.batch_no ASC";
         

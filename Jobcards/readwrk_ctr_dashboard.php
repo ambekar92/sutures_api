@@ -44,6 +44,7 @@ if($stmt1 != 1){
         extract($row);
  
         $Wrk_ctr_dashboard_item=array(
+            "date" => $date,
             "wrk_ctr_code" => $wrk_ctr_code,
             "wrk_ctr_desc"=> $wrk_ctr_desc,
             "machine"=> $machine,

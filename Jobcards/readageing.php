@@ -41,6 +41,9 @@ if($num>0){
         $ageing_item=array(
             "Jobcard" => $batch_no,
             "Size"    => $fg_code,
+            "plan"    => $plan,
+            "plan_type"    => $plan_type,
+            "required_type"    => $required_type,
             "Department"=> $dept_desc,
             "team_lead"=> $team_lead,
             "operator"=> $operator,

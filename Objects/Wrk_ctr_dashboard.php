@@ -23,7 +23,7 @@ class Wrk_ctr_dashboard{
          
         
               if ($wrk_ctr_code == "NULL"){
-            $query = "SELECT D.wrk_ctr_code,D.wrk_ctr_desc,count(M.mach_code)as machine,ifnull(jp.U_pending_cards,0)as U_pending_cards,ifnull(jp.R_pending_cards,0)as R_pending_cards,ifnull(A.U_completed_cards,0)as U_completed_cards,ifnull(A.R_completed_cards,0)as R_completed_cards ,ifnull(ROUND((B.OK_Qnty)/12,2),0) as ok_qty,ifnull(ROUND((B.Reject_Qnty)/12,2),0) as rej_qty from tb_o_workcenter D
+          $query = "SELECT '$date' as date, D.wrk_ctr_code,D.wrk_ctr_desc,count(M.mach_code)as machine,ifnull(jp.U_pending_cards,0)as U_pending_cards,ifnull(jp.R_pending_cards,0)as R_pending_cards,ifnull(A.U_completed_cards,0)as U_completed_cards,ifnull(A.R_completed_cards,0)as R_completed_cards ,ifnull(ROUND((B.OK_Qnty)/12,2),0) as ok_qty,ifnull(ROUND((B.Reject_Qnty)/12,2),0) as rej_qty from tb_o_workcenter D
             JOIN tb_m_machine M on D.wrk_ctr_code = M.wrk_ctr_code
             left join (SELECT count((case when tb_m_jobcard.urgent = 0 then tb_m_jobcard.batch_no end)) as R_pending_cards,
                               count((case when tb_m_jobcard.urgent = 1 then tb_m_jobcard.batch_no end)) as u_pending_cards, 
