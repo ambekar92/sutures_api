@@ -8,17 +8,17 @@ header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Ac
 // database connection will be here
 // include database and object files
 include_once '../Config/database.php';
-include_once '../Objects/Ageing.php';
+include_once '../Objects/Reasons_report.php';
  
 // instantiate database and product object
 $database = new Database();
 $db = $database->getConnection();
  
 // initialize object
-$ageing = new ageing($db);
+$Reasons_report = new Reasons_report($db);
 
 // query products
-$stmt = $ageing->read();
+$stmt = $Reasons_report->read();
 $num = $stmt->rowCount();
 
  
@@ -26,7 +26,7 @@ $num = $stmt->rowCount();
 if($num>0){
  
     // products array
-    $ageing_arr=array();
+    $reasons_report_arr=array();
    // $Jobcard_arr=array();
  
     // retrieve our table contents
@@ -38,33 +38,27 @@ if($num>0){
         // just $name only
         extract($row);
  
-        $ageing_item=array(
-            "Jobcard" => $batch_no,
-            "Size"    => $fg_code,
-            "plan"    => $plan,
-            "plan_type"=> $plan_desc,
-            "required_type" => $type,
-            "Department"=> $to_dept_desc,
-            "team_lead"=> $team_lead,
-            "operator"=> $operator,
-            "created_on"=>$created_on,
-            "Idle_from"=> $idle_from,
-            "jobcard_cyl_days"=>$jobcard_cyl_days,
-            "no_of_idle_days"=>$no_of_idle_days,
+        $reasons_report_item=array(
+            "date" =>$date_,
+            "wrk_ctr_desc" =>$wrk_ctr_desc,
+            "reason" =>$prod_reas_descp,
+            "start_time" =>$start_time,
+            "end_time" =>$end_time,
+            "remarks" =>$remarks,
         );
  
-        array_push($ageing_arr, $ageing_item);
+        array_push($reasons_report_arr, $reasons_report_item);
     }
  
     // set response code - 200 OK
     http_response_code(200);
  
     // show products data in json format
-    echo json_encode($ageing_arr);
+    echo json_encode($reasons_report_arr);
 }else{
  
     // set response code - 404 Not found
-   // http_response_code(404);
+    //http_response_code(404);
  
     // tell the user no products found
     echo json_encode(
