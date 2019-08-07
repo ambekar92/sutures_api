@@ -110,11 +110,11 @@ if($stmt1 != 1){
      
         // set response code - 404 Not found
        // http_response_code(404);
-     
+         $status['data'] = [];
         // tell the user no products found
-        echo json_encode(
-            array("message" => "No products found.")
-        );
+        $status['message'] ="No products found.";
+        echo json_encode($status);
+        
     }
 }
 

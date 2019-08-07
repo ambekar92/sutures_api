@@ -21,7 +21,7 @@ class Oee_dashboard_plant{
 
             $date = $data['date'];
     
-             $query = "SELECT tb_o_workcenter.wrk_ctr_code,tb_o_workcenter.wrk_ctr_desc,ifnull((((sum(tot_count)*sum(idle_cycl_time))/sum(run_time))*100),0)as performance_perc,ifnull(((sum(run_time)/sum(plnd_prod_time))*100),0) as availability_perc,ifnull(((sum(ok_qty)/sum(total_count))*100),0)as quality_perc,ifnull(((ifnull(((sum(tot_count)*sum(idle_cycl_time))/sum(run_time)),0))*(ifnull((sum(run_time)/sum(plnd_prod_time)),0))*(ifnull((sum(ok_qty)/sum(total_count)),0)))*100,0) as oee_perc FROM tb_o_workcenter
+             $query = "SELECT tb_o_workcenter.wrk_ctr_code,tb_o_workcenter.wrk_ctr_desc,ifnull((((sum(tot_count)*AVG(NULLIF(idle_cycl_time,0)))/sum(run_time/60))*100),0)as performance_perc,ifnull(((sum(run_time)/sum(plnd_prod_time))*100),0) as availability_perc,ifnull(((sum(ok_qty)/sum(total_count))*100),0)as quality_perc,ifnull(((ifnull(((sum(tot_count)*AVG(idle_cycl_time))/sum(run_time/60)),0))*(ifnull((sum(run_time)/sum(plnd_prod_time)),0))*(ifnull((sum(ok_qty)/sum(total_count)),0)))*100,0) as oee_perc FROM tb_o_workcenter
              left join(select * from tb_t_oee where date_ = '$date' ) tb_t_oee  on tb_t_oee.wrk_ctr_code = tb_o_workcenter.wrk_ctr_code
              GROUP BY wrk_ctr_code";
               
@@ -39,7 +39,7 @@ class Oee_dashboard_plant{
 
     $date = $data['date'];
 
-    $query1 = "SELECT ifnull((((sum(tot_count)*sum(idle_cycl_time))/sum(run_time))*100),0)as performance_perc,ifnull(((sum(run_time)/sum(plnd_prod_time))*100),0) as availability_perc,ifnull(((sum(ok_qty)/sum(total_count))*100),0)as quality_perc,ifnull(((ifnull(((sum(tot_count)*sum(idle_cycl_time))/sum(run_time)),0))*(ifnull((sum(run_time)/sum(plnd_prod_time)),0))*(ifnull((sum(ok_qty)/sum(total_count)),0)))*100,0) as oee_perc FROM `tb_t_oee` where date_ = '$date'";
+    $query1 = "SELECT ifnull((((sum(tot_count)*AVG(NULLIF(idle_cycl_time,0)))/sum(run_time/60))*100),0)as performance_perc,ifnull(((sum(run_time)/sum(plnd_prod_time))*100),0) as availability_perc,ifnull(((sum(ok_qty)/sum(total_count))*100),0)as quality_perc,ifnull(((ifnull(((sum(tot_count)*AVG(NULLIF(idle_cycl_time,0)))/sum(run_time/60)),0))*(ifnull((sum(run_time)/sum(plnd_prod_time)),0))*(ifnull((sum(ok_qty)/sum(total_count)),0)))*100,0) as oee_perc  from `tb_t_oee` where date_ = '$date'";
 
     // prepare query statement
      $stmt1 = $this->conn->prepare($query1);

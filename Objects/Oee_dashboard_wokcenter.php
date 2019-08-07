@@ -43,7 +43,7 @@ class Oee_dashboard_workcenter{
     $date = $data['date'];
     $wrk_ctr_code = $data['wrk_ctr_code'];
 
-    $query1 = "SELECT tb_o_workcenter.wrk_ctr_code,tb_o_workcenter.wrk_ctr_desc, ifnull((((sum(tot_count)*sum(idle_cycl_time))/sum(run_time))*100),0)as performance_perc,ifnull(((sum(run_time)/sum(plnd_prod_time))*100),0) as availability_perc,ifnull(((sum(ok_qty)/sum(total_count))*100),0)as quality_perc,ifnull(((ifnull(((sum(tot_count)*sum(idle_cycl_time))/sum(run_time)),0))*(ifnull((sum(run_time)/sum(plnd_prod_time)),0))*(ifnull((sum(ok_qty)/sum(total_count)),0)))*100,0) as oee_perc  FROM tb_m_machine 
+    $query1 = "SELECT tb_o_workcenter.wrk_ctr_code,tb_o_workcenter.wrk_ctr_desc, ifnull((((sum(tot_count)*AVG(NULLIF(idle_cycl_time,0)))/sum(run_time/60))*100),0)as performance_perc,ifnull(((sum(run_time)/sum(plnd_prod_time))*100),0) as availability_perc,ifnull(((sum(ok_qty)/sum(total_count))*100),0)as quality_perc,ifnull(((ifnull(((sum(tot_count)*AVG(NULLIF(idle_cycl_time,0)))/sum(run_time/60)),0))*(ifnull((sum(run_time)/sum(plnd_prod_time)),0))*(ifnull((sum(ok_qty)/sum(total_count)),0)))*100,0) as oee_perc  FROM tb_m_machine 
     join tb_o_workcenter on tb_m_machine.wrk_ctr_code = tb_o_workcenter.wrk_ctr_code 
     left join(select * from tb_t_oee WHERE date_ = '$date' ) tb_t_oee on tb_m_machine.mach_code = tb_t_oee.mach_code
     WHERE tb_o_workcenter.wrk_ctr_code = '$wrk_ctr_code' GROUP BY wrk_ctr_code";
