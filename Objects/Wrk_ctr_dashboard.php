@@ -73,7 +73,7 @@ group by D.wrk_ctr_code";
     $wrk_ctr_code = $data['wrk_ctr_code'];
     $date = $data['date'];
 
-    $query2 = "SELECT ifnull(B.completed_cards,0)as completed_cards ,wrk_ctr_code,ifnull(A.today_plan,0) as daily_target FROM tb_o_workcenter
+    $query2 = "SELECT ifnull(B.completed_cards,0)as completed_cards ,wrk_ctr_code,ifnull(A.daily_target,0) as daily_target FROM tb_o_workcenter
     LEFT JOIN (select count(batch_no)as completed_cards,present_dept from tb_t_job_card_trans where status_code = 803 and oper_status = 807 and  date(updated_at) = '$date' group by present_dept) B on B.present_dept = tb_o_workcenter.wrk_ctr_code
     LEFT JOIN  (SELECT work_ctr_code,process,today_plan from  tb_t_prod_dash_h where date_ = '$date') A on tb_o_workcenter.wrk_ctr_code = A.work_ctr_code";
 

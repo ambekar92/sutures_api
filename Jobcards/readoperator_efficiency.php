@@ -43,9 +43,11 @@ if($num>0){
             "emp_id"=> $emp_id,
             "name"=> $frst_name,
             "no_of_cards"=> $no_of_cards,
+            "mach"=> $mach,
             "actual_duration"=> $actual_duration,
             "target_duration"=> $target_duration,
-            "efficiency"=> $efficiency,
+            "time_efficiency"=> $t_eff,
+            "work_efficiency"=> $w_eff,
             
         );
  

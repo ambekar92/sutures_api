@@ -25,7 +25,7 @@ class Machine_repo{
 
     // read products
     function read(){
- 
+        
         $mach_code = $_GET['mach_code'];
         
     // select all query
