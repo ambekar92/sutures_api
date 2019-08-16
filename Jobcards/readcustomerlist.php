@@ -20,7 +20,7 @@ $Customer_list = new Customer_list($db);
 // query products
 $stmt = $Customer_list->read();
 $num = $stmt->rowCount();
-
+ 
  
 // check if more than 0 record found
 if($num>0){

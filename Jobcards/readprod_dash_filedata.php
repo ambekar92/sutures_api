@@ -24,6 +24,7 @@ $Prod_dash_filedata = new Prod_dash_filedata($db);
 $stmt = $Prod_dash_filedata->read();
 $stmt1 = $Prod_dash_filedata->read1();
 $getReason = $Prod_dash_filedata->read2();
+$W_status = $Prod_dash_filedata->read3();
 $num = $stmt->rowCount();
 $num1 = $stmt1->rowCount();
 $getReasonCount = $getReason->rowCount();
@@ -110,6 +111,17 @@ if($num>0 && $num1>0 ){
          );
     }
 
+    while ($row = $W_status->fetch(PDO::FETCH_ASSOC)){
+        // extract row
+        // this will make $row['name'] to
+        // just $name only
+        extract($row);
+ 
+        $W_status1[]=array(
+            "date"=> $date_,
+            
+         );
+    }
     // set response code - 200 OK
     http_response_code(200);
 
@@ -118,7 +130,8 @@ if($num>0 && $num1>0 ){
     // show products data in json format
     $response['header'] =$Prod_dash_filedata_item1;
     $response['body'] =$Prod_dash_filedata_item;
-	$response['reasons'] =$getReasonList;
+    $response['reasons'] =$getReasonList;
+    $response['date'] =$W_status1;
     echo json_encode($response);
 }else{
     $response['header'] =[];

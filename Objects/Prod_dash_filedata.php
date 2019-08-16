@@ -87,6 +87,25 @@ class Prod_dash_filedata {
 
 
 			return $stmt2;
+        }
+        
+
+        function read3(){
+			// $data = json_decode(file_get_contents('php://input'), true);
+			// $date = $data['date'];
+
+
+			$query3 = "SELECT MAx(date_) as date_ FROM `tb_t_prod_dash_i` where date_ < (select max(date_) from tb_t_prod_dash_i where status = 'Holiday') and status = 'Working'";
+
+			// prepare query statement
+			$stmt3 = $this->conn->prepare($query3);
+
+			// execute query
+
+			$stmt3->execute();
+
+
+			return $stmt3;
 		}
 
 }
