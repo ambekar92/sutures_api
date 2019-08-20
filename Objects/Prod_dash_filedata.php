@@ -18,28 +18,30 @@ class Prod_dash_filedata {
      $date = $data['date'];
 
    $query = "SELECT IFNULL(date_,0) as date_,
-   IFNULL(work_ctr_code,0)as work_ctr_code ,
-   IFNULL(process,0)as process,
-   IFNULL(daily_target,0) as daily_target,
-   IFNULL(man_power,0)as man_power,
-   IFNULL(machine,0)as machine,
-   IFNULL(material,0)as material,
-   IFNULL(today_plan,0)as today_plan,
-   IFNULL(planed_man_power,0)as planed_man_power,
-   IFNULL(actual_card_urgent_rb,0)as actual_card_urgent_rb,
-   IFNULL(actual_card_urgent_ct,0)as actual_card_urgent_ct,
-   IFNULL(actual_card_regular_rb,0)as actual_card_regular_rb,
-   IFNULL(actual_card_regular_ct,0)as actual_card_regular_ct,
-   IFNULL(card_stock_urgent_rb,0)as card_stock_urgent_rb,
-   IFNULL(card_stock_urgent_ct,0)as card_stock_urgent_ct,
-   IFNULL(card_stock_regular_rb,0)as card_stock_regular_rb,
-   IFNULL(card_stock_regular_ct,0)as card_stock_regular_ct,
-   (IFNULL(actual_card_urgent_rb,0)+IFNULL(actual_card_urgent_ct,0)+IFNULL(actual_card_regular_rb,0)+IFNULL(actual_card_regular_ct,0)+IFNULL(card_stock_urgent_rb,0)+IFNULL(card_stock_urgent_ct,0)+IFNULL(card_stock_regular_rb,0)+IFNULL(card_stock_regular_ct,0))as monthly_total_cards,
-   (IFNULL(daily_target,0) * (select COUNT(*)from  tb_t_prod_dash_i where status = 'Working'))as planned_cards,
-   ((IFNULL(daily_target,0) * (select COUNT(*)from  tb_t_prod_dash_i where status = 'Working'))- (IFNULL(actual_card_urgent_rb,0)+IFNULL(actual_card_urgent_ct,0)+IFNULL(actual_card_regular_rb,0)+IFNULL(actual_card_regular_ct,0))) as backlogs,
-   ((IFNULL(actual_card_urgent_rb,0)+IFNULL(actual_card_urgent_ct,0)+IFNULL(actual_card_regular_rb,0)+IFNULL(actual_card_regular_ct,0)+IFNULL(card_stock_urgent_rb,0)+IFNULL(card_stock_urgent_ct,0)+IFNULL(card_stock_regular_rb,0)+IFNULL(card_stock_regular_ct,0)) / ((select COUNT(*)from  tb_t_prod_dash_i where status = 'Working')) )as avg_cards,
-   IFNULL(remarks,0) as remarks ,IFNULL(reasons,0) as reasons 
-   FROM `tb_t_prod_dash_h` where date_ = '$date ' ";
+   IFNULL(dt.work_ctr_code,0)as work_ctr_code ,
+   IFNULL(dt.process,0)as process,
+   IFNULL(dt.daily_target,0) as daily_target,
+   IFNULL(dt.man_power,0)as man_power,
+   IFNULL(dt.machine,0)as machine,
+   IFNULL(dt.material,0)as material,
+   IFNULL(dt.today_plan,0)as today_plan,
+   IFNULL(dt.planed_man_power,0)as planed_man_power,
+   IFNULL(dt.actual_card_urgent_rb,0)as actual_card_urgent_rb,
+   IFNULL(dt.actual_card_urgent_ct,0)as actual_card_urgent_ct,
+   IFNULL(dt.actual_card_regular_rb,0)as actual_card_regular_rb,
+   IFNULL(dt.actual_card_regular_ct,0)as actual_card_regular_ct,
+   IFNULL(dt.card_stock_urgent_rb,0)as card_stock_urgent_rb,
+   IFNULL(dt.card_stock_urgent_ct,0)as card_stock_urgent_ct,
+   IFNULL(dt.card_stock_regular_rb,0)as card_stock_regular_rb,
+   IFNULL(dt.card_stock_regular_ct,0)as card_stock_regular_ct,
+   mnt.monthly_total_cards,
+   mnt.planned_cards,
+   mnt.backlogs,
+   mnt.avg_cards,
+   IFNULL(dt.remarks,0) as remarks ,IFNULL(dt.reasons,0) as reasons 
+   FROM `tb_t_prod_dash_h` dt
+   join(SELECT A.work_ctr_code,(A.actual_card_urgent_rb + A.actual_card_urgent_ct + A.actual_card_regular_rb + A.actual_card_regular_ct) as monthly_total_cards,sum(daily_target)as planned_cards,((sum(daily_target))-(A.actual_card_urgent_rb + A.actual_card_urgent_ct + A.actual_card_regular_rb + A.actual_card_regular_ct)) as backlogs, (((sum(daily_target))-(A.actual_card_urgent_rb + A.actual_card_urgent_ct + A.actual_card_regular_rb + A.actual_card_regular_ct))/count(B.status))as avg_cards,count(B.status) FROM `tb_t_prod_dash_h` A join tb_t_prod_dash_i B on A.date_ = B.date_  where A.date_ between  DATE_FORMAT('$date' ,'%Y-%m-01') AND '$date' and B.status = 'Working' GROUP BY A.work_ctr_code) mnt on mnt.work_ctr_code = dt.work_ctr_code
+   where date_ = '$date'";
 
     // prepare query statement
     $stmt = $this->conn->prepare($query);
