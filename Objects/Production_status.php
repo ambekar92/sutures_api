@@ -50,7 +50,7 @@ class Production_status {
      JOIN tb_m_fg fg on fg.fg_code = jc.fg_code
      JOIN tb_m_customer c on c.cust_code = jc.cust_code
      JOIN tb_m_plan_type on jc.plan_code = tb_m_plan_type.plan_code
-     WHERE (date(ph.updated_at) between  DATE_FORMAT('$date' ,'%Y-%(m-3)-01') AND '$date' ) and js.status_code = 804
+     WHERE (date(ph.updated_at) between  DATE_FORMAT(('$date' - INTERVAL 3 MONTH) ,'%Y-%m-01') AND '$date' ) and js.status_code = 804
      GROUP  BY jc.batch_no ORDER BY jc.updated_at DESC,jc.batch_no ASC";
     }else{
       
@@ -87,7 +87,7 @@ class Production_status {
         JOIN tb_m_fg fg on fg.fg_code = jc.fg_code
         JOIN tb_m_customer c on c.cust_code = jc.cust_code
         JOIN tb_m_plan_type on jc.plan_code = tb_m_plan_type.plan_code
-        WHERE (date(ph.updated_at) between  DATE_FORMAT('$date' ,'%Y-%(m-3)-01') AND '$date' ) and js.status_code != 804
+        WHERE (date(ph.updated_at) between  DATE_FORMAT(('$date' - INTERVAL 3 MONTH) ,'%Y-%m-01') AND '$date' ) and js.status_code != 804
         GROUP  BY jc.batch_no ORDER BY jc.updated_at DESC,jc.batch_no ASC";
 
     }
