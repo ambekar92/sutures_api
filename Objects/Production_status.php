@@ -39,7 +39,7 @@ class Production_status {
      MAX(IF(ph.wrk_ctr_code = 103018,  DATE_FORMAT(ph.updated_at,'%d/%m'),' - '))HARDENING_TEMPERING,
      MAX(IF(ph.wrk_ctr_code = 103019,  DATE_FORMAT(ph.updated_at,'%d/%m'),' - '))MICRO,
      MAX(IF(ph.wrk_ctr_code = 103020,  DATE_FORMAT(ph.updated_at,'%d/%m'),' - '))INSPECTION,
-     MAX(IF(ph.wrk_ctr_code = 103021,  DATE_FORMAT(ph.updated_at,'%d/%m'),' - ')) PACKING_LABELLING,
+     MAX(IF(ph.wrk_ctr_code = 103021,  DATE_FORMAT(ph.updated_at,'%d/%b'),' - ')) PACKING_LABELLING,
      MAX(IF(ph.wrk_ctr_code = 103023,  DATE_FORMAT(ph.updated_at,'%d/%m'),' - '))EDM,
      MAX(IF(ph.wrk_ctr_code = 103021,  '1','0')) color,
      MAX(IF(ph.wrk_ctr_code = 103021,  'Completed','-'))completed
@@ -76,7 +76,7 @@ class Production_status {
         MAX(IF(ph.wrk_ctr_code = 103018,  DATE_FORMAT(ph.updated_at,'%d/%m'),' - '))HARDENING_TEMPERING,
         MAX(IF(ph.wrk_ctr_code = 103019,  DATE_FORMAT(ph.updated_at,'%d/%m'),' - '))MICRO,
         MAX(IF(ph.wrk_ctr_code = 103020,  DATE_FORMAT(ph.updated_at,'%d/%m'),' - '))INSPECTION,
-        MAX(IF(ph.wrk_ctr_code = 103021,  DATE_FORMAT(ph.updated_at,'%d/%m'),' - ')) PACKING_LABELLING,
+        MAX(IF(ph.wrk_ctr_code = 103021,  DATE_FORMAT(ph.updated_at,'%d/%b'),' - ')) PACKING_LABELLING,
         MAX(IF(ph.wrk_ctr_code = 103023,  DATE_FORMAT(ph.updated_at,'%d/%m'),' - '))EDM,
         MAX(IF(ph.wrk_ctr_code = 103021,  '1','0')) color,
         MAX(IF(ph.wrk_ctr_code = 103021,  'Completed','-'))completed
