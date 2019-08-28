@@ -13,6 +13,8 @@ class Production_status {
     function read(){
         $data = json_decode(file_get_contents('php://input'), true);
         $date = $data['date'];
+        $month = $data['month'];
+        $year = $data['year'];
         $c_p_status = $data['c_p_status'];
 
 
@@ -50,10 +52,11 @@ class Production_status {
      JOIN tb_m_fg fg on fg.fg_code = jc.fg_code
      JOIN tb_m_customer c on c.cust_code = jc.cust_code
      JOIN tb_m_plan_type on jc.plan_code = tb_m_plan_type.plan_code
-     WHERE (date(ph.updated_at) between  DATE_FORMAT(('$date' - INTERVAL 3 MONTH) ,'%Y-%m-01') AND '$date' ) and js.status_code = 804
+    --  WHERE (date(ph.updated_at) between  DATE_FORMAT(('$date' - INTERVAL 3 MONTH) ,'%Y-%m-01') AND '$date' ) 
+    WHERE MONTH(ph.updated_at) = '$month' and year(ph.updated_at) = '$year'
+    and js.status_code = 804
      GROUP  BY jc.batch_no ORDER BY jc.updated_at DESC,jc.batch_no ASC";
     }else{
-      
         $query = "SELECT jc.fg_code,round(jc.total_qty/12,0) as ord_qty,c.cust_name,jc.req_date,jc.plan,tb_m_plan_type.plan_desc,fg.type,jc.batch_no,
         concat(jc.ord_qty,'|',(MIN(ok.qty)*12))as op_qty,
         MAX(IF(ph.wrk_ctr_code = 103001,  DATE_FORMAT(ph.updated_at,'%d/%m'),' - '))STRAIGHT_CUT,
@@ -106,6 +109,8 @@ class Production_status {
         function read1(){
             $data = json_decode(file_get_contents('php://input'), true);
             $date = $data['date'];
+            $month = $data['month'];
+            $year = $data['year'];
             $c_p_status = $data['c_p_status'];
     
             
@@ -141,7 +146,9 @@ class Production_status {
          JOIN tb_m_fg fg on fg.fg_code = jc.fg_code
          JOIN tb_m_customer c on c.cust_code = jc.cust_code
          JOIN tb_m_plan_type on jc.plan_code = tb_m_plan_type.plan_code
-         WHERE (date(ph.updated_at) between  DATE_FORMAT(('$date' - INTERVAL 3 MONTH) ,'%Y-%m-01') AND '$date' ) and js.status_code = 804
+        --  WHERE (date(ph.updated_at) between  DATE_FORMAT(('$date' - INTERVAL 3 MONTH) ,'%Y-%m-01') AND '$date' ) 
+         WHERE MONTH(ph.updated_at) = '$month' and year(ph.updated_at) = '$year'
+         and js.status_code = 804
          GROUP  BY jc.batch_no ORDER BY jc.updated_at DESC,jc.batch_no ASC";
         }else{
             $query1 = "SELECT jc.fg_code,round(jc.total_qty/12,0) as ord_qty,c.cust_name,jc.req_date,jc.plan,tb_m_plan_type.plan_desc,fg.type,jc.batch_no,

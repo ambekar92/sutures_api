@@ -8,29 +8,30 @@ header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Ac
 // database connection will be here
 // include database and object files
 include_once '../Config/database.php';
-include_once '../Objects/Assign_update.php';
+include_once '../Objects/Prod_dash_data_update.php';
  
 // instantiate database and product object
 $database = new Database();
 $db = $database->getConnection();
  
 // initialize object
-$Assign_update = new Assign_update($db);
+$Prod_dash_data_update = new Prod_dash_data_update($db);
 
 // query products
-$stmt = $Assign_update->read();
-
-$alert_msg = $Assign_update->msg_alrt();
+$stmt = $Prod_dash_data_update->read();
 
 // check if more than 0 record found
-if($stmt != 0){
+if($stmt == 0){
+    $status['status'] = 0;
+    $status['message'] ='There is No Data for Selected Date And Data Not Updated Successfully ';
+    echo json_encode($status);
+}elseif($stmt == 1){
     $status['status'] = 1;
-    $status['message'] ='data updated successfully';
-    $status['txt_msg_status'] = $alert_msg;
+    $status['message'] ='There is No Data for Selected Date And Data Updated Successfully ';
     echo json_encode($status);
 }else{
-    $status['status'] = 0;
-    $status['message'] ='data not updated successfully';
+    $status['status'] = 2;
+    $status['message'] ='There is Data for Selected Date';
     echo json_encode($status);
 }
 

@@ -51,5 +51,41 @@ class Assign_update {
     
    
 }
+
+
+public function msg_alrt(){
+  
+   $data = json_decode(file_get_contents('php://input'), true);
+
+   $userno = $data['userno'];
+
+//// Account details
+$apiKey = urlencode('y4l4dYnvGVg-67LoH1o3ohcj3MQEeyCEzvSXF45V85');
+//	// Message details
+$numbers = $userno;
+$sender = urlencode('SCH_ALRT');
+$message = rawurlencode('This is your message');
+
+
+//	$numbers = implode(',', $numbers);
+
+// Prepare data for POST request
+$data = array('apikey' => $apiKey, 'numbers' => $numbers, "sender" => $sender, "message" => $message);
+
+// Send the POST request with cURL
+$ch = curl_init('https://api.textlocal.in/send/');
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+$response = curl_exec($ch);
+   
+curl_close($ch);
+
+// Process your response here
+return $response;
+
+}
+
+
  
 }
