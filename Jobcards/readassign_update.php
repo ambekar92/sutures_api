@@ -20,13 +20,14 @@ $Assign_update = new Assign_update($db);
 // query products
 $stmt = $Assign_update->read();
 
-$alert_msg = $Assign_update->msg_alrt();
+
 
 // check if more than 0 record found
 if($stmt != 0){
+    // $alert_msg = $Assign_update->msg_alrt();
     $status['status'] = 1;
     $status['message'] ='data updated successfully';
-    $status['txt_msg_status'] = $alert_msg;
+    // $status['txt_msg_status'] = $alert_msg;
     echo json_encode($status);
 }else{
     $status['status'] = 0;

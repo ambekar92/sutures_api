@@ -22,8 +22,10 @@ $stmt = $Release_checklist->read();
 
 // check if more than 0 record found
 if($stmt != 0){
+    // $alert_msg = $Release_checklist->msg_alrt();
     $status['status'] = 1;
     $status['message'] ='data updated successfully';
+    // $status['txt_msg_status'] = $alert_msg;
     echo json_encode($status);
 }else{
     $status['status'] = 0;

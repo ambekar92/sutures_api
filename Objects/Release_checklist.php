@@ -49,5 +49,97 @@ class Release_checklist {
     
    
 }
+
+public function msg_alrt(){
+  
+    $data = json_decode(file_get_contents('php://input'), true);
  
+    $ticket = $data['ticket'];
+    $machine_check_h_code = $data['machine_check_h_code'];
+    
+
+ 
+   $querych = "SELECT wc.wrk_ctr_desc dept,machine_desc mach,checklist_desc issue,op.frst_name raised_by,si.frst_name shift_inch,si.mobile   shift_inch_mob,me.frst_name mnt_eng FROM `tb_t_mach_check_h` ch
+   join tb_m_employee op on op.emp_id = ch.reported_by 
+   join tb_m_employee si on si.emp_id = ch.assigned_by
+   join tb_m_employee me on me.emp_id = ch.assigned_me
+   join tb_m_machine mc on mc.mach_code = ch.machine_code
+   join tb_o_workcenter wc on wc.wrk_ctr_code = mc.wrk_ctr_code
+   WHERE ch.ticket = '$ticket' and ch.machine_check_h_code = '$machine_check_h_code'";
+ 
+    $querydf = "SELECT mobile from tb_m_employee 
+    join tb_m_role_status on tb_m_role_status.role_code = tb_m_employee.role_code
+    where tb_m_role_status.sms_to_sent = 1";
+ 
+ 
+ $stmtch = $this->conn->prepare($querych);
+ $stmtdf = $this->conn->prepare($querydf);
+ 
+ $stmtch->execute();
+ $stmtdf->execute();
+ 
+ while ($row = $stmtch->fetch(PDO::FETCH_ASSOC)){
+             
+         extract($row);
+         
+             $dept=$dept;
+             $mach=$mach;
+             $issue=$issue; 
+             $raised_by=$raised_by;
+             $shift_inch=$shift_inch; 
+             $shift_inch_mob=$shift_inch_mob; 
+             $mnt_eng=$mnt_eng;
+          
+ }
+ 
+ while ($row = $stmtdf->fetch(PDO::FETCH_ASSOC)){
+             
+    extract($row);
+    
+       //  $mobile=$mobile;
+ 
+        $numbers[] = $mobile;
+    
+ }
+ 
+ 
+ array_push($numbers, $shift_inch_mob);
+ 
+ $numbers = implode(',', $numbers);
+ 
+ $message = rawurlencode("Checklist Closed: Machine is Active,
+                          Dept - ".$dept.",
+                          Machine - ".$mach.",
+                          Raised by - ".$raised_by.",
+                          Closed by - ".$mnt_eng."");
+
+
+
+                          
+$apiKey = urlencode('y4l4dYnvGVg-67LoH1o3ohcj3MQEeyCEzvSXF45V85');
+//	// Message details
+$numbers = $numbers;
+$sender = urlencode('TXTLCL');
+
+//	$numbers = implode(',', $numbers);
+
+// Prepare data for POST request
+$data = array('apikey' => $apiKey, 'numbers' => $numbers, "sender" => $sender, "message" => $message);
+
+// Send the POST request with cURL
+$ch = curl_init('https://api.textlocal.in/send/');
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+$response = curl_exec($ch);
+   
+curl_close($ch);
+
+// Process your response here
+return $response;
+
+}
+ 
+ 
+
 }
