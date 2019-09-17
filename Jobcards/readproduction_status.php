@@ -157,7 +157,7 @@ if($num>0){
  
     // tell the user no products found
 
-    $status['date'] =[];
+    $status['data'] =[];
     // $status['qty'] =[];
     $status['message'] ="No products found.";
     echo json_encode($status);

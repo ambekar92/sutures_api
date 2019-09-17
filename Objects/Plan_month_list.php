@@ -14,7 +14,7 @@ class Plan_month_list{
  
         
     // select all query
-    $query = "SELECT plan FROM `tb_m_jobcard` GROUP by plan";
+    $query = "SELECT plan FROM `tb_m_jobcard` GROUP by plan ORDER BY updated_at DESC";
  
     // prepare query statement
     $stmt = $this->conn->prepare($query);

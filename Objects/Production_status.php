@@ -49,36 +49,39 @@ class Production_status {
               $condition = "AND jc.fg_code  = '$size' and jc.plan_code = '$plan_code'";
          }elseif ($plan == 'NULL' AND $size != 'NULL' AND $cust_name != 'NULL' AND $plan_code == 'NULL'  ) {
            $condition = "AND jc.fg_code  = '$size' and jc.cust_name = '$cust_name'";
+         }elseif ($plan != 'NULL' AND $size == 'NULL' AND $cust_name == 'NULL' AND $plan_code != 'NULL'  ) {
+               $condition = "AND jc.plan  = '$plan' and jc.plan_code = '$plan_code'";
          }elseif($plan == 'NULL' AND $size == 'NULL' AND $cust_name == 'NULL' AND $plan_code == 'NULL' ){
             $condition = " " ;
          }
 
 
     if ($c_p_status != "PENDING"){
-    $query = "SELECT jc.fg_code,round(jc.total_qty/12,0) as ord_qty,jc.cust_name,jc.req_date,jc.plan,tb_m_plan_type.plan_desc,fg.type,jc.batch_no,
-     concat(jc.ord_qty,'|',(MIN(ok.qty)*12))as op_qty,
-     MAX(IF(ph.wrk_ctr_code = 103001,  DATE_FORMAT(ph.updated_at,'%d.%m.%Y'),' - '))STRAIGHT_CUT,
-     MAX(IF(ph.wrk_ctr_code = 103002,  DATE_FORMAT(ph.updated_at,'%d.%m.%Y'),' - '))ROUGH_POINTING,
-     MAX(IF(ph.wrk_ctr_code = 103003,  DATE_FORMAT(ph.updated_at,'%d.%m.%Y'),' - '))ENDCUT,
-     MAX(IF(ph.wrk_ctr_code = 103004,  DATE_FORMAT(ph.updated_at,'%d.%m.%Y'),' - '))CENTERING,
-     MAX(IF(ph.wrk_ctr_code = 103005,  DATE_FORMAT(ph.updated_at,'%d.%m.%Y'),' - '))CENTER_CHECK,
-     MAX(IF(ph.wrk_ctr_code = 103006,  DATE_FORMAT(ph.updated_at,'%d.%m.%Y'),' - '))MICRO_CENTERING, 
-     MAX(IF(ph.wrk_ctr_code = 103007,  DATE_FORMAT(ph.updated_at,'%d.%m.%Y'),' - '))MICRO_CENTRE_CHECK,
-     MAX(IF(ph.wrk_ctr_code = 103008,  DATE_FORMAT(ph.updated_at,'%d.%m.%Y'),' - '))MICRO_DRILLING,
-     MAX(IF(ph.wrk_ctr_code = 103009,  DATE_FORMAT(ph.updated_at,'%d.%m.%Y'),' - '))MICRO_GAUGE_CHECK,
-     MAX(IF(ph.wrk_ctr_code = 103010,  DATE_FORMAT(ph.updated_at,'%d.%m.%Y'),' - '))DRILLING,
-     MAX(IF(ph.wrk_ctr_code = 103011,  DATE_FORMAT(ph.updated_at,'%d.%m.%Y'),' - '))GAUGE_CHECK,
-     MAX(IF(ph.wrk_ctr_code = 103012,  DATE_FORMAT(ph.updated_at,'%d.%m.%Y'),' - '))PRESS,
-     MAX(IF(ph.wrk_ctr_code = 103013,  DATE_FORMAT(ph.updated_at,'%d.%m.%Y'),' - '))MANUAL_GRINDING,
-     MAX(IF(ph.wrk_ctr_code = 103014,  DATE_FORMAT(ph.updated_at,'%d.%m.%Y'),' - '))AUTO_GRINDING,
-     MAX(IF(ph.wrk_ctr_code = 103015,  DATE_FORMAT(ph.updated_at,'%d.%m.%Y'),' - '))AUTO_GRINDING_INSPECTION,
-     MAX(IF(ph.wrk_ctr_code = 103016,  DATE_FORMAT(ph.updated_at,'%d.%m.%Y'),' - '))BENDING,
-     MAX(IF(ph.wrk_ctr_code = 103017,  DATE_FORMAT(ph.updated_at,'%d.%m.%Y'),' - '))BENDING_INSPECTION,
-     MAX(IF(ph.wrk_ctr_code = 103018,  DATE_FORMAT(ph.updated_at,'%d.%m.%Y'),' - '))HARDENING_TEMPERING,
-     MAX(IF(ph.wrk_ctr_code = 103019,  DATE_FORMAT(ph.updated_at,'%d.%m.%Y'),' - '))MICRO,
-     MAX(IF(ph.wrk_ctr_code = 103020,  DATE_FORMAT(ph.updated_at,'%d.%m.%Y'),' - '))INSPECTION,
-     MAX(IF(ph.wrk_ctr_code = 103021,  DATE_FORMAT(ph.updated_at,'%d.%m.%Y'),' - ')) PACKING_LABELLING,
-     MAX(IF(ph.wrk_ctr_code = 103023,  DATE_FORMAT(ph.updated_at,'%d.%m.%Y'),' - '))EDM,
+    $query = "SELECT jc.fg_code,round(jc.total_qty/12,0) as ord_qty,jc.cust_name, DATE_FORMAT(jc.req_date,'%d-%b-%y')as req_date,
+    concat('`',jc.plan,'`') as plan,tb_m_plan_type.plan_desc,fg.type,jc.batch_no,
+     concat(round(jc.ord_qty/12,0),'|',MIN(ok.qty))as op_qty,
+     MAX(IF(ph.wrk_ctr_code = 103001,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))STRAIGHT_CUT,
+     MAX(IF(ph.wrk_ctr_code = 103002,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))ROUGH_POINTING,
+     MAX(IF(ph.wrk_ctr_code = 103003,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))ENDCUT,
+     MAX(IF(ph.wrk_ctr_code = 103004,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))CENTERING,
+     MAX(IF(ph.wrk_ctr_code = 103005,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))CENTER_CHECK,
+     MAX(IF(ph.wrk_ctr_code = 103006,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))MICRO_CENTERING, 
+     MAX(IF(ph.wrk_ctr_code = 103007,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))MICRO_CENTRE_CHECK,
+     MAX(IF(ph.wrk_ctr_code = 103008,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))MICRO_DRILLING,
+     MAX(IF(ph.wrk_ctr_code = 103009,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))MICRO_GAUGE_CHECK,
+     MAX(IF(ph.wrk_ctr_code = 103010,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))DRILLING,
+     MAX(IF(ph.wrk_ctr_code = 103011,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))GAUGE_CHECK,
+     MAX(IF(ph.wrk_ctr_code = 103012,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))PRESS,
+     MAX(IF(ph.wrk_ctr_code = 103013,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))MANUAL_GRINDING,
+     MAX(IF(ph.wrk_ctr_code = 103014,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))AUTO_GRINDING,
+     MAX(IF(ph.wrk_ctr_code = 103015,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))AUTO_GRINDING_INSPECTION,
+     MAX(IF(ph.wrk_ctr_code = 103016,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))BENDING,
+     MAX(IF(ph.wrk_ctr_code = 103017,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))BENDING_INSPECTION,
+     MAX(IF(ph.wrk_ctr_code = 103018,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))HARDENING_TEMPERING,
+     MAX(IF(ph.wrk_ctr_code = 103019,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))MICRO,
+     MAX(IF(ph.wrk_ctr_code = 103020,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))INSPECTION,
+     MAX(IF(ph.wrk_ctr_code = 103021,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - ')) PACKING_LABELLING,
+     MAX(IF(ph.wrk_ctr_code = 103023,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))EDM,
      MAX(IF(ph.wrk_ctr_code = 103021,  '1','0')) color,
      MAX(IF(ph.wrk_ctr_code = 103021,  'Completed','-'))completed
      FROM    tb_m_jobcard jc
@@ -92,30 +95,30 @@ class Production_status {
     and js.status_code = 804 " .$condition."
      GROUP  BY jc.batch_no ORDER BY jc.updated_at DESC,jc.batch_no ASC";
     }else{
-        $query = "SELECT jc.fg_code,round(jc.total_qty/12,0) as ord_qty,jc.cust_name,jc.req_date,jc.plan,tb_m_plan_type.plan_desc,fg.type,jc.batch_no,
-        concat(jc.ord_qty,'|',(MIN(ok.qty)*12))as op_qty,
-        MAX(IF(ph.wrk_ctr_code = 103001,  DATE_FORMAT(ph.updated_at,'%d.%m.%Y'),' - '))STRAIGHT_CUT,
-        MAX(IF(ph.wrk_ctr_code = 103002,  DATE_FORMAT(ph.updated_at,'%d.%m.%Y'),' - '))ROUGH_POINTING,
-        MAX(IF(ph.wrk_ctr_code = 103003,  DATE_FORMAT(ph.updated_at,'%d.%m.%Y'),' - '))ENDCUT,
-        MAX(IF(ph.wrk_ctr_code = 103004,  DATE_FORMAT(ph.updated_at,'%d.%m.%Y'),' - '))CENTERING,
-        MAX(IF(ph.wrk_ctr_code = 103005,  DATE_FORMAT(ph.updated_at,'%d.%m.%Y'),' - '))CENTER_CHECK,
-        MAX(IF(ph.wrk_ctr_code = 103006,  DATE_FORMAT(ph.updated_at,'%d.%m.%Y'),' - '))MICRO_CENTERING, 
-        MAX(IF(ph.wrk_ctr_code = 103007,  DATE_FORMAT(ph.updated_at,'%d.%m.%Y'),' - '))MICRO_CENTRE_CHECK,
-        MAX(IF(ph.wrk_ctr_code = 103008,  DATE_FORMAT(ph.updated_at,'%d.%m.%Y'),' - '))MICRO_DRILLING,
-        MAX(IF(ph.wrk_ctr_code = 103009,  DATE_FORMAT(ph.updated_at,'%d.%m.%Y'),' - '))MICRO_GAUGE_CHECK,
-        MAX(IF(ph.wrk_ctr_code = 103010,  DATE_FORMAT(ph.updated_at,'%d.%m.%Y'),' - '))DRILLING,
-        MAX(IF(ph.wrk_ctr_code = 103011,  DATE_FORMAT(ph.updated_at,'%d.%m.%Y'),' - '))GAUGE_CHECK,
-        MAX(IF(ph.wrk_ctr_code = 103012,  DATE_FORMAT(ph.updated_at,'%d.%m.%Y'),' - '))PRESS,
-        MAX(IF(ph.wrk_ctr_code = 103013,  DATE_FORMAT(ph.updated_at,'%d.%m.%Y'),' - '))MANUAL_GRINDING,
-        MAX(IF(ph.wrk_ctr_code = 103014,  DATE_FORMAT(ph.updated_at,'%d.%m.%Y'),' - '))AUTO_GRINDING,
-        MAX(IF(ph.wrk_ctr_code = 103015,  DATE_FORMAT(ph.updated_at,'%d.%m.%Y'),' - '))AUTO_GRINDING_INSPECTION,
-        MAX(IF(ph.wrk_ctr_code = 103016,  DATE_FORMAT(ph.updated_at,'%d.%m.%Y'),' - '))BENDING,
-        MAX(IF(ph.wrk_ctr_code = 103017,  DATE_FORMAT(ph.updated_at,'%d.%m.%Y'),' - '))BENDING_INSPECTION,
-        MAX(IF(ph.wrk_ctr_code = 103018,  DATE_FORMAT(ph.updated_at,'%d.%m.%Y'),' - '))HARDENING_TEMPERING,
-        MAX(IF(ph.wrk_ctr_code = 103019,  DATE_FORMAT(ph.updated_at,'%d.%m.%Y'),' - '))MICRO,
-        MAX(IF(ph.wrk_ctr_code = 103020,  DATE_FORMAT(ph.updated_at,'%d.%m.%Y'),' - '))INSPECTION,
-        MAX(IF(ph.wrk_ctr_code = 103021,  DATE_FORMAT(ph.updated_at,'%d.%m.%Y'),' - ')) PACKING_LABELLING,
-        MAX(IF(ph.wrk_ctr_code = 103023,  DATE_FORMAT(ph.updated_at,'%d.%m.%Y'),' - '))EDM,
+        $query = "SELECT jc.fg_code,round(jc.total_qty/12,0) as ord_qty,jc.cust_name,DATE_FORMAT(jc.req_date,'%d-%b-%y')as req_date,concat('`',jc.plan,'`')as plan,tb_m_plan_type.plan_desc,fg.type,jc.batch_no,
+        concat(round(jc.ord_qty/12,0),'|',MIN(ok.qty))as op_qty,
+        MAX(IF(ph.wrk_ctr_code = 103001,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))STRAIGHT_CUT,
+        MAX(IF(ph.wrk_ctr_code = 103002,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))ROUGH_POINTING,
+        MAX(IF(ph.wrk_ctr_code = 103003,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))ENDCUT,
+        MAX(IF(ph.wrk_ctr_code = 103004,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))CENTERING,
+        MAX(IF(ph.wrk_ctr_code = 103005,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))CENTER_CHECK,
+        MAX(IF(ph.wrk_ctr_code = 103006,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))MICRO_CENTERING, 
+        MAX(IF(ph.wrk_ctr_code = 103007,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))MICRO_CENTRE_CHECK,
+        MAX(IF(ph.wrk_ctr_code = 103008,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))MICRO_DRILLING,
+        MAX(IF(ph.wrk_ctr_code = 103009,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))MICRO_GAUGE_CHECK,
+        MAX(IF(ph.wrk_ctr_code = 103010,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))DRILLING,
+        MAX(IF(ph.wrk_ctr_code = 103011,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))GAUGE_CHECK,
+        MAX(IF(ph.wrk_ctr_code = 103012,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))PRESS,
+        MAX(IF(ph.wrk_ctr_code = 103013,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))MANUAL_GRINDING,
+        MAX(IF(ph.wrk_ctr_code = 103014,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))AUTO_GRINDING,
+        MAX(IF(ph.wrk_ctr_code = 103015,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))AUTO_GRINDING_INSPECTION,
+        MAX(IF(ph.wrk_ctr_code = 103016,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))BENDING,
+        MAX(IF(ph.wrk_ctr_code = 103017,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))BENDING_INSPECTION,
+        MAX(IF(ph.wrk_ctr_code = 103018,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))HARDENING_TEMPERING,
+        MAX(IF(ph.wrk_ctr_code = 103019,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))MICRO,
+        MAX(IF(ph.wrk_ctr_code = 103020,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))INSPECTION,
+        MAX(IF(ph.wrk_ctr_code = 103021,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - ')) PACKING_LABELLING,
+        MAX(IF(ph.wrk_ctr_code = 103023,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))EDM,
         MAX(IF(ph.wrk_ctr_code = 103021,  '1','0')) color,
         MAX(IF(ph.wrk_ctr_code = 103021,  'Completed','-'))completed
         FROM    tb_m_jobcard jc
@@ -180,14 +183,15 @@ class Production_status {
                   $condition = "AND jc.fg_code  = '$size' and jc.plan_code = '$plan_code'";
              }elseif ($plan == 'NULL' AND $size != 'NULL' AND $cust_name != 'NULL' AND $plan_code == 'NULL'  ) {
                $condition = "AND jc.fg_code  = '$size' and jc.cust_name = '$cust_name'";
+             }elseif ($plan != 'NULL' AND $size == 'NULL' AND $cust_name == 'NULL' AND $plan_code != 'NULL'  ) {
+               $condition = "AND jc.plan  = '$plan' and jc.plan_code = '$plan_code'";
              }elseif($plan == 'NULL' AND $size == 'NULL' AND $cust_name == 'NULL' AND $plan_code == 'NULL' ){
                 $condition = " " ;
              }
-    
-            
+
          if ($c_p_status != "PENDING"){
-         $query1 = "SELECT jc.fg_code,round(jc.total_qty/12,0) as ord_qty,jc.cust_name,jc.req_date,jc.plan,tb_m_plan_type.plan_desc,fg.type,jc.batch_no,
-         concat(jc.ord_qty,'|',(MIN(ok.qty)*12))as op_qty,
+         $query1 = "SELECT jc.fg_code,round(jc.total_qty/12,0) as ord_qty,jc.cust_name,DATE_FORMAT(jc.req_date,'%d-%b-%y')as req_date,concat('`',jc.plan,'`')as plan,tb_m_plan_type.plan_desc,fg.type,jc.batch_no,
+         concat(round(jc.ord_qty/12,0),'|',MIN(ok.qty))as op_qty,
          MAX(IF(ph.wrk_ctr_code = 103001,  (ok.qty),' - '))STRAIGHT_CUT,
          MAX(IF(ph.wrk_ctr_code = 103002,  (ok.qty),' - '))ROUGH_POINTING,
          MAX(IF(ph.wrk_ctr_code = 103003,  (ok.qty),' - '))ENDCUT,
@@ -221,8 +225,8 @@ class Production_status {
          and js.status_code = 804 " .$condition."
          GROUP  BY jc.batch_no ORDER BY jc.updated_at DESC,jc.batch_no ASC";
         }else{
-            $query1 = "SELECT jc.fg_code,round(jc.total_qty/12,0) as ord_qty,jc.cust_name,jc.req_date,jc.plan,tb_m_plan_type.plan_desc,fg.type,jc.batch_no,
-            concat(jc.ord_qty,'|',(MIN(ok.qty)*12))as op_qty,
+           $query1 = "SELECT jc.fg_code,round(jc.total_qty/12,0) as ord_qty,jc.cust_name,DATE_FORMAT(jc.req_date,'%d-%b-%y')as req_date,concat('`',jc.plan,'`')as plan,tb_m_plan_type.plan_desc,fg.type,jc.batch_no,
+            concat(round(jc.ord_qty/12,0),'|',MIN(ok.qty))as op_qty,
             MAX(IF(ph.wrk_ctr_code = 103001,  (ok.qty),' - '))STRAIGHT_CUT,
             MAX(IF(ph.wrk_ctr_code = 103002,  (ok.qty),' - '))ROUGH_POINTING,
             MAX(IF(ph.wrk_ctr_code = 103003,  (ok.qty),' - '))ENDCUT,
