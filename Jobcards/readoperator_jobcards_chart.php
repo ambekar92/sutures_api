@@ -8,25 +8,25 @@ header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Ac
 // database connection will be here
 // include database and object files
 include_once '../Config/database.php';
-include_once '../Objects/Operator_efficiency.php';
+include_once '../Objects/Operator_jobcards_chart.php';
  
 // instantiate database and product object
 $database = new Database();
 $db = $database->getConnection();
  
 // initialize object
-$Operator_efficiency = new Operator_efficiency($db);
+$Operator_jobcards_chart = new Operator_jobcards_chart($db);
 
 // query products
-$stmt = $Operator_efficiency->read();
+$stmt = $Operator_jobcards_chart->read();
 $num = $stmt->rowCount();
 
  
 // check if more than 0 record found
 if($num>0){
-    
-    // products array
-    $Operator_efficiency_arr=array();
+ 
+ 
+    $Operator_jobcards_chart_arr=array();
    // $Jobcard_arr=array();
  
     // retrieve our table contents
@@ -36,30 +36,45 @@ if($num>0){
         // extract row
         // this will make $row['name'] to
         // just $name only
+
+$hex = '#';
+ 
+//Create a loop.
+foreach(array('r', 'g', 'b') as $color){
+    //Random number between 0 and 255.
+    $val = mt_rand(120,200);
+    //Convert the random number into a Hex value.
+    $dechex = dechex($val);
+    //Pad with a 0 if length is less than 2.
+    if(strlen($dechex) < 2){
+        $dechex = "0" . $dechex;
+    }
+    //Concatenate
+    $hex .= $dechex;
+}
+
         extract($row);
  
-        $Operator_efficiency_item=array(
-            "date" => $datee,
-            "date_c" => $date_c,
-            "emp_id"=> $emp_id,
-            "name"=> $frst_name,
-            "no_of_cards"=> $no_of_cards,
-            "mach"=> $mach,
-            "actual_duration"=> $actual_duration,
-            "target_duration"=> $target_duration,
-            "time_efficiency"=> $t_eff,
-            "work_efficiency"=> $w_eff,
-            
+        $Operator_jobcards_chart_item=array(
+            "mach_code" =>$mach_code,
+            "mach_name" =>$mach_name,
+            "wrk_ctr_desc" =>$wrk_ctr_desc,
+            "batch_no" =>$batch_no,
+            "time_from" =>$time_from,
+            "time_to" =>$time_to,
+            "duration" =>$duration,
+            "color" => $hex,
         );
  
-        array_push($Operator_efficiency_arr, $Operator_efficiency_item);
+        array_push($Operator_jobcards_chart_arr, $Operator_jobcards_chart_item);
     }
  
     // set response code - 200 OK
     http_response_code(200);
  
     // show products data in json format
-    echo json_encode($Operator_efficiency_arr);
+    echo json_encode($Operator_jobcards_chart_arr);
+
 }else{
  
     // set response code - 404 Not found

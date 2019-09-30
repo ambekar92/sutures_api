@@ -59,7 +59,7 @@ class Production_status {
     if ($c_p_status != "PENDING"){
     $query = "SELECT jc.fg_code,round(jc.total_qty/12,0) as ord_qty,jc.cust_name, DATE_FORMAT(jc.req_date,'%d-%b-%y')as req_date,
     concat('`',jc.plan,'`') as plan,tb_m_plan_type.plan_desc,fg.type,jc.batch_no,
-     concat(round(jc.ord_qty/12,0),'|',MIN(ok.qty))as op_qty,
+     concat(round(jc.ord_qty/12,0),' | ',MIN(ok.qty))as op_qty,
      MAX(IF(ph.wrk_ctr_code = 103001,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))STRAIGHT_CUT,
      MAX(IF(ph.wrk_ctr_code = 103002,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))ROUGH_POINTING,
      MAX(IF(ph.wrk_ctr_code = 103003,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))ENDCUT,
@@ -96,7 +96,7 @@ class Production_status {
      GROUP  BY jc.batch_no ORDER BY jc.updated_at DESC,jc.batch_no ASC";
     }else{
         $query = "SELECT jc.fg_code,round(jc.total_qty/12,0) as ord_qty,jc.cust_name,DATE_FORMAT(jc.req_date,'%d-%b-%y')as req_date,concat('`',jc.plan,'`')as plan,tb_m_plan_type.plan_desc,fg.type,jc.batch_no,
-        concat(round(jc.ord_qty/12,0),'|',MIN(ok.qty))as op_qty,
+        concat(round(jc.ord_qty/12,0),' | ',MIN(ok.qty))as op_qty,
         MAX(IF(ph.wrk_ctr_code = 103001,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))STRAIGHT_CUT,
         MAX(IF(ph.wrk_ctr_code = 103002,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))ROUGH_POINTING,
         MAX(IF(ph.wrk_ctr_code = 103003,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))ENDCUT,
@@ -191,7 +191,7 @@ class Production_status {
 
          if ($c_p_status != "PENDING"){
          $query1 = "SELECT jc.fg_code,round(jc.total_qty/12,0) as ord_qty,jc.cust_name,DATE_FORMAT(jc.req_date,'%d-%b-%y')as req_date,concat('`',jc.plan,'`')as plan,tb_m_plan_type.plan_desc,fg.type,jc.batch_no,
-         concat(round(jc.ord_qty/12,0),'|',MIN(ok.qty))as op_qty,
+         concat(round(jc.ord_qty/12,0),' | ',MIN(ok.qty))as op_qty,
          MAX(IF(ph.wrk_ctr_code = 103001,  (ok.qty),' - '))STRAIGHT_CUT,
          MAX(IF(ph.wrk_ctr_code = 103002,  (ok.qty),' - '))ROUGH_POINTING,
          MAX(IF(ph.wrk_ctr_code = 103003,  (ok.qty),' - '))ENDCUT,
@@ -226,7 +226,7 @@ class Production_status {
          GROUP  BY jc.batch_no ORDER BY jc.updated_at DESC,jc.batch_no ASC";
         }else{
            $query1 = "SELECT jc.fg_code,round(jc.total_qty/12,0) as ord_qty,jc.cust_name,DATE_FORMAT(jc.req_date,'%d-%b-%y')as req_date,concat('`',jc.plan,'`')as plan,tb_m_plan_type.plan_desc,fg.type,jc.batch_no,
-            concat(round(jc.ord_qty/12,0),'|',MIN(ok.qty))as op_qty,
+            concat(round(jc.ord_qty/12,0),' | ',MIN(ok.qty))as op_qty,
             MAX(IF(ph.wrk_ctr_code = 103001,  (ok.qty),' - '))STRAIGHT_CUT,
             MAX(IF(ph.wrk_ctr_code = 103002,  (ok.qty),' - '))ROUGH_POINTING,
             MAX(IF(ph.wrk_ctr_code = 103003,  (ok.qty),' - '))ENDCUT,
