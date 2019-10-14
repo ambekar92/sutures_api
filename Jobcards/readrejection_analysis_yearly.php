@@ -8,17 +8,17 @@ header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Ac
 // database connection will be here
 // include database and object files
 include_once '../Config/database.php';
-include_once '../Objects/Rejection_analysis_ovr.php';
+include_once '../Objects/Rejection_analysis_yearly.php';
  
 // instantiate database and product object
 $database = new Database();
 $db = $database->getConnection();
- 
+
 // initialize object
-$Rejection_analysis_ovr = new Rejection_analysis_ovr($db);
+$Rejection_analysis_yearly = new Rejection_analysis_yearly($db);
 
 // query products
-$stmt = $Rejection_analysis_ovr->read();
+$stmt = $Rejection_analysis_yearly->read();
 // $stmt1 = $Rejection_analysis_data->read1();
 $num = $stmt->rowCount();
 // $num1 = $stmt1->rowCount();
@@ -28,7 +28,7 @@ $num = $stmt->rowCount();
 if($num>0){
  
     // products array
-    $Rejection_analysis_ovr_arr=array();
+    $Rejection_analysis_yearly_arr=array();
 
     // retrieve our table contents
     // fetch() is faster than fetchAll()
@@ -41,7 +41,9 @@ if($num>0){
          
        extract($row);
 
-        $Rejection_analysis_ovr_arr_item=array(
+        $Rejection_analysis_yearly_arr_item=array(
+            "month" =>$_month,
+            "month_desc" =>$month_desc,
             "tot_batch_qty" =>$tot_batch_qty,
             "tot_batch_qty_doz" =>round($tot_batch_qty_doz,2),
             "tot_apprvd_qty" =>$tot_apprvd_qty,
@@ -54,11 +56,12 @@ if($num>0){
             "avg_yield" =>round($avg_yield,2),
         );
  
-        array_push($Rejection_analysis_ovr_arr, $Rejection_analysis_ovr_arr_item);
+        array_push($Rejection_analysis_yearly_arr, $Rejection_analysis_yearly_arr_item);
     }
+
     // set response code - 200 OK
     http_response_code(200);
-    $status['data'] =$Rejection_analysis_ovr_arr;
+    $status['data'] =$Rejection_analysis_yearly_arr;
     echo json_encode($status);
 }else{
  

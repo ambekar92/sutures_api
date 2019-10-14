@@ -28,6 +28,7 @@ $num = $stmt->rowCount();
 // check if more than 0 record found
  if($num>0){
     // products array
+
     $Oee_history=array();
 
    
@@ -184,8 +185,8 @@ $num = $stmt->rowCount();
                 "plnd_prod_time"=> $plnd_prod_time,
                 "run_time"=> $run_time,
                 "idle_time"=> $idle_time,
-                "target_prod"=> $target_prod,
-                "actual_prod"=> $actual_prod,
+                "target_prod"=> "-",
+                "actual_prod"=> "-",
                 "total_count"=> $total_count,
                 "ok_qty"=> $ok_qty,
                 "rej_qty"=> $rej_qty,
@@ -216,8 +217,8 @@ $num = $stmt->rowCount();
                 "plnd_prod_time"=> $plnd_prod_time,
                 "run_time"=> $run_time,
                 "idle_time"=> $idle_time,
-                "target_prod"=> $target_prod,
-                "actual_prod"=> $actual_prod,
+                "target_prod"=> "-",
+                "actual_prod"=> "-",
                 "total_count"=> $total_count,
                 "ok_qty"=> $ok_qty,
                 "rej_qty"=> $rej_qty,
@@ -249,8 +250,8 @@ $num = $stmt->rowCount();
                 "plnd_prod_time"=> $plnd_prod_time,
                 "run_time"=> $run_time,
                 "idle_time"=> $idle_time,
-                "target_prod"=> $target_prod,
-                "actual_prod"=> $actual_prod,
+                "target_prod"=> "-",
+                "actual_prod"=> "-",
                 "total_count"=> $total_count,
                 "ok_qty"=> $ok_qty,
                 "rej_qty"=> $rej_qty,
@@ -272,15 +273,15 @@ $num = $stmt->rowCount();
     echo json_encode($status);
 }else{
  
+
     // set response code - 404 Not found
    // http_response_code(404);
- 
-    // tell the user no products found
-    echo json_encode(
-        array("message" => "No products found.")
-    );
+  // tell the user no products found
 
+    $status['details'] =[];
+    $status['message'] ="No products found.";
 
+    echo json_encode($status);
 }
 
 

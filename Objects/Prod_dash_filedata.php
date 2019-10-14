@@ -18,7 +18,7 @@ class Prod_dash_filedata {
      $date = $data['date'];
 
    $query = "SELECT IFNULL(date_,0) as date_,
-   IFNULL(dt.work_ctr_code,0)as work_ctr_code ,
+   IFNULL(dt.work_ctr_code,0)as work_ctr_code,
    IFNULL(dt.process,0)as process,
    IFNULL(dt.daily_target,0) as daily_target,
    IFNULL(dt.man_power,0)as man_power,
