@@ -37,7 +37,7 @@ class Rejection_analysis_data {
 
           
             
-          $str .= "MAX(IF(ph.wrk_ctr_code = '$wrk_ctr_code' and ph.qlty_code = '$qlty_code',  (ph.qty),'-'))$wrk_ctr_desc".'_'."$qlty_code_desc,";
+          $str .= "MAX(IF(ph.wrk_ctr_code = '$wrk_ctr_code' and ph.qlty_code = '$qlty_code',  (ph.qty),'0'))$wrk_ctr_desc".'_'."$qlty_code_desc,";
 
 
         }
@@ -56,8 +56,8 @@ class Rejection_analysis_data {
 
  $query = "SELECT max(date(ph.updated_at))as datee,jc.batch_no,jc.fg_code,fg.type,jc.ord_qty as st_qty,MAX(IF(ph.wrk_ctr_code = 103021 and ph.qlty_code = 620,(ph.qty),' - '))apprvd_qty,
     MAX(IF(ph.wrk_ctr_code = 103020,(rej.qty),' - '))final_insp_rej,round(((MAX(IF(ph.wrk_ctr_code = 103021 and ph.qlty_code = 620,(ph.qty),' - '))/(jc.ord_qty))*100),2) as yield, ".$str." 
-     MAX(IF(ph.wrk_ctr_code = 103021 and ph.qlty_code != 620,  (ph.qty),'-'))PACKING_LABELLING,
-     MAX(IF(ph.wrk_ctr_code = 103023 and ph.qlty_code != 621,  (ph.qty),'-'))EDM    
+     MAX(IF(ph.wrk_ctr_code = 103021 and ph.qlty_code != 620,  (ph.qty),'0'))PACKING_LABELLING,
+     MAX(IF(ph.wrk_ctr_code = 103023 and ph.qlty_code != 621,  (ph.qty),'0'))EDM    
     FROM    tb_m_jobcard jc
     LEFT JOIN  tb_t_prod_i ph  on ph.batch_no = jc.batch_no
     JOIN tb_t_job_status js on js.batch_no = jc.batch_no
@@ -128,7 +128,7 @@ class Rejection_analysis_data {
 $query = "SELECT 
 'TOTAL' as datee,
 count(DISTINCT(jc.batch_no))as batch_no,
-'-' as fg_code,'-' as type,
+'0' as fg_code,'0' as type,
 IFNULL(SUM(CASE WHEN ph.wrk_ctr_code = '103021' and ph.qlty_code = '620' THEN (jc.ord_qty) END),0) as st_qty,
 IFNULL(SUM(CASE WHEN ph.wrk_ctr_code = '103021' and ph.qlty_code = '620' THEN (ph.qty) END),0)apprvd_qty,
 IFNULL(SUM(CASE WHEN ph.wrk_ctr_code = '103020' and phh.qlty_type_code = 502 THEN (ph.qty) END),0)final_insp_rej,

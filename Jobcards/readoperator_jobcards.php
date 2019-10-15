@@ -48,6 +48,7 @@ if($num>0){
             "wrk_ctr_code" =>$DEPT_code,
             "ok_qty" =>$OK_QTY,
             "rej_qty" =>$REJ_QTY,
+            "cons_qty" =>$cons_qty,
             "machine_desc" =>$MACHINE_NAME,
             "time_from" =>$TIME_FROM,
             "time_to" =>$TIME_TO,
