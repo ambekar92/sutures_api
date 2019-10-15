@@ -62,8 +62,7 @@ class Consumables_dept
  JOIN  tb_t_prod_h phh  on phh.batch_no = ph.batch_no and phh.sl_no = ph.sl_no and phh.qlty_type_code = 503
  JOIN tb_t_job_status js on js.batch_no = jc.batch_no
  JOIN tb_m_fg fg on fg.fg_code = jc.fg_code
- -- WHERE (MONTH(ph.updated_at)  = '$month') and YEAR(ph.updated_at) = $year " .$condition."
-
+WHERE (MONTH(ph.updated_at)  = '$month') and YEAR(ph.updated_at) = $year " .$condition."
 GROUP  BY jc.batch_no ORDER BY jc.updated_at DESC,jc.batch_no ASC";
 
 
