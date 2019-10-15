@@ -28,7 +28,7 @@ class Consumables_resns {
           $condition = " " ;
        }
 
-echo  $query = "SELECT date(pi.updated_at)as datee,pi.batch_no,jc.fg_code,em.frst_name,pi.mach_code,mc.mach_desc,pi.wrk_ctr_code,wc.wrk_ctr_desc,qc.qlty_code_desc,sum(pi.qty) as qty FROM `tb_t_prod_i` pi  
+  $query = "SELECT date(pi.updated_at)as datee,pi.batch_no,jc.fg_code,em.frst_name,pi.mach_code,mc.mach_desc,pi.wrk_ctr_code,wc.wrk_ctr_desc,qc.qlty_code_desc,sum(pi.qty) as qty FROM `tb_t_prod_i` pi  
 join tb_t_prod_h ph on  pi.batch_no = ph.batch_no and pi.sl_no = ph.sl_no
 join tb_m_qlty_code qc on qc.qlty_code = pi.qlty_code
 join tb_m_employee em on em.emp_id = ph.emp_id
@@ -51,10 +51,5 @@ GROUP BY pi.mach_code,pi.batch_no order by pi.updated_at";
 
         }
 
-   
-
-
-       
-    
 }
 
