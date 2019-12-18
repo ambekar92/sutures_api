@@ -37,6 +37,16 @@ if($num>0){
         // this will make $row['name'] to
         // just $name only
         extract($row);
+
+        if($status_code == 803 AND $oper_status == 807){
+            $operator_status = 'Completed';
+        }else if($status_code == 802 AND $oper_status == 806){
+            $operator_status = 'Running';
+        }else if($status_code == 802 AND $oper_status == 807 AND $ack_status == '-' AND $operator == 'NOT ASSIGNED'  ){
+            $operator_status = '-';
+        }else if($status_code == 802 AND $oper_status == 807 AND $ack_status == '-' AND $operator != 'NOT ASSIGNED'  ){
+            $operator_status = 'Stopped' ;
+        }
  
         $Multi_selection_item=array(
             "Batch_no" => $batch_no,
@@ -51,6 +61,7 @@ if($num>0){
             "Team_lead_id"=> $team_lead_id,
             "Operator"=> $operator,
             "Operator_id"=> $operator_id,
+            "Operator_status"=>$operator_status,
             "Updated_at"=> $updated_at,
         
         );

@@ -40,7 +40,7 @@ class Prod_dash_filedata {
    IFNULL(mnt.avg_cards,0)as avg_cards,
    IFNULL(dt.remarks,0) as remarks ,IFNULL(dt.reasons,0) as reasons 
    FROM `tb_t_prod_dash_h` dt
-   LEFT JOIN(SELECT A.work_ctr_code,(C.completed_cards) as monthly_total_cards,sum(daily_target)as planned_cards,((sum(daily_target))-(C.completed_cards)) as backlogs, (((sum(daily_target))-(C.completed_cards))/count(B.status))as avg_cards,count(B.status) FROM `tb_t_prod_dash_h` A join tb_t_prod_dash_i B on A.date_ = B.date_  
+   LEFT JOIN(SELECT A.work_ctr_code,(C.completed_cards) as monthly_total_cards,sum(daily_target)as planned_cards,((sum(daily_target))-(C.completed_cards)) as backlogs, ((C.completed_cards)/count(B.status))as avg_cards,count(B.status) FROM `tb_t_prod_dash_h` A join tb_t_prod_dash_i B on A.date_ = B.date_  
    LEFT JOIN(SELECT ifnull(B.completed_cards,0)as completed_cards ,wrk_ctr_code FROM tb_o_workcenter
     LEFT JOIN (select count(batch_no)as completed_cards,present_dept from tb_t_job_card_trans where status_code = 803 and oper_status = 807 and  date(updated_at) between  DATE_FORMAT('$date' ,'%Y-%m-01') AND '$date' group by present_dept) B on B.present_dept = tb_o_workcenter.wrk_ctr_code)C on C.wrk_ctr_code = A.work_ctr_code
 where A.date_ between  DATE_FORMAT('$date' ,'%Y-%m-01') AND '$date' and B.status = 'Working' GROUP BY A.work_ctr_code) mnt on mnt.work_ctr_code = dt.work_ctr_code

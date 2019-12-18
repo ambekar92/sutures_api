@@ -130,7 +130,7 @@ $query = "SELECT max(date(ph.updated_at))as datee,jc.batch_no,jc.fg_code,fg.type
    JOIN tb_t_prod_h phh on phh.batch_no = ph.batch_no and phh.sl_no = ph.sl_no
    JOIN tb_t_job_status js on js.batch_no = jc.batch_no
    JOIN tb_m_fg fg on fg.fg_code = jc.fg_code
-   WHERE (MONTH(js.updated_at)  = 09) and YEAR(js.updated_at) = 2019
+   WHERE (MONTH(js.updated_at)  = '$month') and YEAR(js.updated_at) = '$year'
    AND js.status_code = 804 " .$condition." 
    ORDER BY jc.updated_at DESC,jc.batch_no ASC";
  

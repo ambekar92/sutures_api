@@ -125,7 +125,7 @@ class Rejection_analysis_data {
 
 
 
-$query = "SELECT 
+ $query = "SELECT 
 'TOTAL' as datee,
 count(DISTINCT(jc.batch_no))as batch_no,
 '0' as fg_code,'0' as type,
@@ -141,7 +141,7 @@ round(((IFNULL(SUM(CASE WHEN ph.wrk_ctr_code = '103021' and ph.qlty_code = '620'
     JOIN tb_t_job_status js on js.batch_no = jc.batch_no
     JOIN tb_m_fg fg on fg.fg_code = jc.fg_code
     LEFT JOIN( SELECT  ph.batch_no, sum(pi.qty) as qty,ph.wrk_ctr_code FROM `tb_t_prod_h` ph JOIN tb_t_prod_i pi ON pi.batch_no=ph.batch_no AND pi.sl_no=ph.sl_no AND ph.qlty_type_code=502 GROUP BY pi.batch_no,pi.wrk_ctr_code) rej on rej.batch_no = ph.batch_no and rej.wrk_ctr_code = ph.wrk_ctr_code
-    WHERE (MONTH(js.updated_at)  = 09) and YEAR(js.updated_at) = 2019
+    WHERE (MONTH(js.updated_at)  = '$month') and YEAR(js.updated_at) = '$year'
     and js.status_code = 804 " .$condition."";
 
 

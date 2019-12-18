@@ -36,11 +36,11 @@ class Prod_dash_data_update {
 
     // execute query
    
- if ( $num == 0 && $num1 == 0 ) { 
+ if ( $num == 0 || $num1 == 0 ) { 
         
-        $query2 = "INSERT INTO tb_t_prod_dash_h (date_,work_ctr_code,process,daily_target,man_power,today_plan,planed_man_power) select '$date' as date_,work_ctr_code,process,daily_target,man_power,today_plan,planed_man_power from tb_t_prod_dash_h where date_ = (SELECT max(date_) FROM `tb_t_prod_dash_h`)";
+        $query2 = "INSERT INTO tb_t_prod_dash_h (date_,work_ctr_code,process,daily_target,man_power,today_plan,planed_man_power) select '$date' as date_,work_ctr_code,process,daily_target,man_power,today_plan,planed_man_power from tb_t_prod_dash_h where date_ = (SELECT max(date_) FROM `tb_t_prod_dash_h`)ON DUPLICATE KEY UPDATE process = VALUES(process),daily_target = VALUES(daily_target),man_power = VALUES(man_power),today_plan = VALUES(today_plan),planed_man_power = VALUES(planed_man_power)";
     
-        $query3 = "INSERT INTO tb_t_prod_dash_i (date_,status,last_month_man_hours,last_month_absenttism,last_month_ot,monthly_man_hours,monthly_absenttism,monthly_ot) select '$date' as date_,status,last_month_man_hours,last_month_absenttism,last_month_ot,monthly_man_hours,monthly_absenttism,monthly_ot from tb_t_prod_dash_i where date_ = (SELECT max(date_) FROM `tb_t_prod_dash_i`) and status = 'Working'";
+        $query3 = "INSERT INTO tb_t_prod_dash_i (date_,status,last_month_man_hours,last_month_absenttism,last_month_ot,monthly_man_hours,monthly_absenttism,monthly_ot) select '$date' as date_,status,last_month_man_hours,last_month_absenttism,last_month_ot,monthly_man_hours,monthly_absenttism,monthly_ot from tb_t_prod_dash_i where date_ = (SELECT max(date_) FROM `tb_t_prod_dash_i` where status = 'Working') ON DUPLICATE KEY UPDATE status = VALUES(status),last_month_man_hours = VALUES(last_month_man_hours),last_month_absenttism = VALUES(last_month_absenttism),last_month_ot = VALUES(last_month_ot),monthly_man_hours = VALUES(monthly_man_hours),monthly_absenttism = VALUES(monthly_absenttism),monthly_ot = VALUES(monthly_ot)";
 
     // prepare query statement                                                          
     $stmt2 = $this->conn->prepare($query2);

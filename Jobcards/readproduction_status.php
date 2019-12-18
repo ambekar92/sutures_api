@@ -91,6 +91,8 @@ if($num>0){
         // extract row
         // this will make $row['name'] to
         // just $name only
+      
+
         extract($row);
  
         $batch=explode("_",$batch_no);

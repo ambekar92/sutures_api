@@ -25,8 +25,8 @@ $num = $stmt->rowCount();
 // check if more than 0 record found
 if($num>0){
  
-    $data = json_decode(file_get_contents('php://input'), true);
-        $emp_name = $data['emp_name'];
+    // $data = json_decode(file_get_contents('php://input'), true);
+    //     $emp_name = $data['emp_name'];
     // products array
     $Operator_jobcards_arr=array();
    // $Jobcard_arr=array();
@@ -39,22 +39,24 @@ if($num>0){
         // this will make $row['name'] to
         // just $name only
         extract($row);
+
+        $efficiency = ((((($ok_qty + $rej_qty)*($target_duration_1 / 2100))*60)/($duration_1))*100);
  
         $Operator_jobcards_item=array(
-            "emp_name" =>$emp_name,
+            "emp_name" =>$frst_name,
             "batch_no" =>$batch_no,
             "fg_code" =>$fg_code,
-            "wrk_ctr_desc" =>$DEPT,
-            "wrk_ctr_code" =>$DEPT_code,
-            "ok_qty" =>$OK_QTY,
-            "rej_qty" =>$REJ_QTY,
+            "wrk_ctr_desc" =>$wrk_ctr_desc,
+            "wrk_ctr_code" =>$present_dept,
+            "ok_qty" =>$ok_qty,
+            "rej_qty" =>$rej_qty,
             "cons_qty" =>$cons_qty,
-            "machine_desc" =>$MACHINE_NAME,
-            "time_from" =>$TIME_FROM,
-            "time_to" =>$TIME_TO,
+            "machine_desc" =>$mach_desc,
+            "time_from" =>$start_time,
+            "time_to" =>$end_time,
             "duration" =>$duration ,
-            "target_duration" =>$target_time ,
-            "efficiency" =>$efficiency ,
+            "target_duration" =>$target_duration ,
+            "efficiency" =>round($efficiency,2)
         );
  
         array_push($Operator_jobcards_arr, $Operator_jobcards_item);
