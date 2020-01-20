@@ -24,7 +24,9 @@ class multi_selection_ovrv{
     IFNULL(COUNT(DISTINCT(CASE WHEN jt.status_code = 802 and jt.oper_status = 807  and js.to_dept = jt.present_dept   THEN js.batch_no END)), 0)as paused 
     FROM tb_o_workcenter w
     join tb_t_job_card_trans jt on jt.present_dept = w.wrk_ctr_code
-    LEFT OUTER join tb_t_job_status js on js.batch_no = jt.batch_no   
+    LEFT OUTER join tb_t_job_status js on js.batch_no = jt.batch_no 
+    join tb_m_jobcard jc on jc.batch_no = jt.batch_no
+    where jc.batch_status is null
     GROUP BY w.wrk_ctr_code";
  
     // prepare query statement

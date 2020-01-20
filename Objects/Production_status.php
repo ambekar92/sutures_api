@@ -92,11 +92,11 @@ class Production_status {
      JOIN tb_m_plan_type on jc.plan_code = tb_m_plan_type.plan_code
     --  WHERE (date(ph.updated_at) between  DATE_FORMAT(('$date' - INTERVAL 3 MONTH) ,'%Y-%m-01') AND '$date' ) 
     WHERE MONTH(js.updated_at) = '$month' and year(js.updated_at) = '$year'
-    and js.status_code = 804 " .$condition."
+    and js.status_code = 804  " .$condition."
      GROUP  BY jc.batch_no ORDER BY jc.updated_at DESC,jc.batch_no ASC";
     }else{
         $query = "SELECT jc.fg_code,round(jc.total_qty/12,0) as ord_qty,jc.cust_name,DATE_FORMAT(jc.req_date,'%d-%b-%y')as req_date,concat('`',jc.plan,'`')as plan,tb_m_plan_type.plan_desc,fg.type,jc.batch_no,
-        concat(round(jc.ord_qty/12,0),' | ',MIN(ok.qty))as op_qty,
+        ifnull(concat(round(jc.ord_qty/12,0),' | ',MIN(ok.qty)),0)as op_qty,
         MAX(IF(ph.wrk_ctr_code = 103001,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))STRAIGHT_CUT,
         MAX(IF(ph.wrk_ctr_code = 103002,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))ROUGH_POINTING,
         MAX(IF(ph.wrk_ctr_code = 103003,  DATE_FORMAT(ph.updated_at,'%d-%b-%y'),' - '))ENDCUT,
@@ -127,8 +127,7 @@ class Production_status {
         LEFT OUTER JOIN( SELECT  ph.batch_no, ROUND(SUM(pi.qty)/12,0) as qty,ph.wrk_ctr_code FROM `tb_t_prod_h` ph JOIN tb_t_prod_i pi ON pi.batch_no=ph.batch_no AND pi.sl_no=ph.sl_no AND ph.qlty_type_code=500 GROUP BY pi.batch_no,pi.wrk_ctr_code ) ok on ok.batch_no = ph.batch_no and  ok.wrk_ctr_code = ph.wrk_ctr_code
         JOIN tb_m_fg fg on fg.fg_code = jc.fg_code
         JOIN tb_m_plan_type on jc.plan_code = tb_m_plan_type.plan_code
-        WHERE Year(ph.updated_at) = Year('$date')  and 
-        js.status_code != 804 " .$condition."
+        WHERE js.status_code != 804 and jc.batch_status is null " .$condition."
         GROUP  BY jc.batch_no ORDER BY jc.updated_at DESC,jc.batch_no ASC";
 
     }
@@ -226,7 +225,7 @@ class Production_status {
          GROUP  BY jc.batch_no ORDER BY jc.updated_at DESC,jc.batch_no ASC";
         }else{
            $query1 = "SELECT jc.fg_code,round(jc.total_qty/12,0) as ord_qty,jc.cust_name,DATE_FORMAT(jc.req_date,'%d-%b-%y')as req_date,concat('`',jc.plan,'`')as plan,tb_m_plan_type.plan_desc,fg.type,jc.batch_no,
-            concat(round(jc.ord_qty/12,0),' | ',MIN(ok.qty))as op_qty,
+            ifnull(concat(round(jc.ord_qty/12,0),' | ',MIN(ok.qty)),0)as op_qty,
             MAX(IF(ph.wrk_ctr_code = 103001,  (ok.qty),' - '))STRAIGHT_CUT,
             MAX(IF(ph.wrk_ctr_code = 103002,  (ok.qty),' - '))ROUGH_POINTING,
             MAX(IF(ph.wrk_ctr_code = 103003,  (ok.qty),' - '))ENDCUT,
@@ -255,8 +254,7 @@ class Production_status {
             LEFT OUTER JOIN( SELECT  ph.batch_no, ROUND(SUM(pi.qty)/12,0) as qty,ph.wrk_ctr_code FROM `tb_t_prod_h` ph JOIN tb_t_prod_i pi ON pi.batch_no=ph.batch_no AND pi.sl_no=ph.sl_no AND ph.qlty_type_code=500 GROUP BY pi.batch_no,pi.wrk_ctr_code ) ok on ok.batch_no = ph.batch_no and  ok.wrk_ctr_code = ph.wrk_ctr_code
             JOIN tb_m_fg fg on fg.fg_code = jc.fg_code
             JOIN tb_m_plan_type on jc.plan_code = tb_m_plan_type.plan_code
-            WHERE Year(ph.updated_at) = Year('$date')  and 
-            js.status_code != 804 " .$condition."
+            WHERE js.status_code != 804  and jc.batch_status is null " .$condition."
             GROUP  BY jc.batch_no ORDER BY jc.updated_at DESC,jc.batch_no ASC";
         }
 

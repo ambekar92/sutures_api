@@ -52,7 +52,7 @@ left OUTER join(select * from tb_t_job_card_trans where (status_code = 803 and o
    LEFT JOIN users U1 on B.emp_id = U1.emp_id 
    LEFT JOIN users U2 on A.emp_id = U2.emp_id 
    JOIN tb_m_plan_type on jc.plan_code = tb_m_plan_type.plan_code
-   where js.status_code <> '804' and date(js.updated_at) < DATE_SUB( '$date',INTERVAL 03 DAY) " .$condition." GROUP BY jc.batch_no  ORDER BY jc.updated_at ASC";
+   where js.status_code <> '804' and jc.batch_status is null and  date(js.updated_at) < DATE_SUB( '$date',INTERVAL 03 DAY) " .$condition." GROUP BY jc.batch_no  ORDER BY jc.updated_at ASC";
  
     // prepare query statement
     $stmt = $this->conn->prepare($query);

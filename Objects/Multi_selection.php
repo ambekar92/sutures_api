@@ -73,7 +73,7 @@ if ($condition != "NO_VALUE" AND $batch = 1 ){
 left OUTER join(select * from tb_t_job_card_trans where (status_code = 803 and oper_status = 807) or (status_code = 802 and oper_status = 806) ) B on B.batch_no = tb_t_job_status.batch_no and tb_t_job_status.to_dept = B.present_dept 
      LEFT JOIN users U1 on B.emp_id = U1.emp_id 
      LEFT JOIN users U2 on A.emp_id = U2.emp_id  
-     " .$condition."  and tb_t_job_status.status_code != '804'
+     " .$condition."  and tb_t_job_status.status_code != '804' and tb_m_jobcard.batch_status is null
      GROUP BY tb_t_job_status.batch_no
      order by tb_t_job_status.updated_at desc"; 
 }elseif( $condition != "NO_VALUE"){
@@ -84,7 +84,7 @@ left OUTER join(select * from tb_t_job_card_trans where status_code = 802 and op
 left OUTER join(select * from tb_t_job_card_trans where (status_code = 803 and oper_status = 807) or (status_code = 802 and oper_status = 806) ) B on B.batch_no = tb_t_job_status.batch_no and tb_t_job_status.to_dept = B.present_dept 
 LEFT JOIN users U1 on B.emp_id = U1.emp_id 
 LEFT JOIN users U2 on A.emp_id = U2.emp_id  
-" .$condition."  and tb_t_job_status.status_code != '804'
+" .$condition."  and tb_t_job_status.status_code != '804' and tb_m_jobcard.batch_status is null
 GROUP BY tb_t_job_status.batch_no
 order by tb_t_job_status.updated_at desc";
 }else{
@@ -95,7 +95,7 @@ left OUTER join(select * from tb_t_job_card_trans where status_code = 802 and op
 left OUTER join(select * from tb_t_job_card_trans where (status_code = 803 and oper_status = 807) or (status_code = 802 and oper_status = 806) ) B on B.batch_no = tb_t_job_status.batch_no and tb_t_job_status.to_dept = B.present_dept 
 LEFT JOIN users U1 on B.emp_id = U1.emp_id 
 LEFT JOIN users U2 on A.emp_id = U2.emp_id
-WHERE tb_t_job_status.status_code != '804'
+WHERE tb_t_job_status.status_code != '804' and tb_m_jobcard.batch_status is null
 GROUP BY tb_t_job_status.batch_no
 order by tb_t_job_status.updated_at desc";
 } 

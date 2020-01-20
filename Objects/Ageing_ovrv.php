@@ -33,7 +33,7 @@ class ageing_ovrv{
     FROM tb_t_job_status js 
         JOIN tb_m_jobcard jc  on js.batch_no  =  jc.batch_no
        JOIN tb_m_plan_type on jc.plan_code = tb_m_plan_type.plan_code
-       where js.status_code <> '804' and date(js.updated_at) < DATE_SUB( '$date',INTERVAL 03 DAY) GROUP BY jc.plan ORDER BY tb_m_plan_type.plan_desc ASC";
+       where js.status_code <> '804' and jc.batch_status is null and date(js.updated_at) < DATE_SUB( '$date',INTERVAL 03 DAY) GROUP BY jc.plan ORDER BY tb_m_plan_type.plan_desc ASC";
  
     // prepare query statement
     $stmt = $this->conn->prepare($query);

@@ -18,7 +18,9 @@ $qlty_type_code_reject = '502';
 $qlty_type_code_rework = '501';
 
 
-//
+//for Batch Stop Status Report
+
+$Where_cnd = 'batch_status not null';
 
 
 
