@@ -57,23 +57,23 @@ $num = $stmt->rowCount();
      }else if( $stmt1 == 'ALL_WEEKLY' ){
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-            // extract row
-            // this will make $row['name'] to
-            // just $name only
-            extract($row);
-     
-            $Oee_history_item=array(
-                "wrk_ctr_code" => $wrk_ctr_code,
-                "wrk_ctr_desc"=> $wrk_ctr_desc,
-                "weekly"=> $weekly,
-                "availability_perc"=>round($availability_perc,2),
-                "performance_perc"=> round($performance_perc,2),
-                "quality_perc"=> round($quality_perc,2),
-                "oee_perc"=> round($oee_perc,2),
-            );
-    
+                // extract row
+                // this will make $row['name'] to
+                // just $name only
+                extract($row);
+        
+                $Oee_history_item=array(
+                    "wrk_ctr_code" => $wrk_ctr_code,
+                    "wrk_ctr_desc"=> $wrk_ctr_desc,
+                    "weekly"=> $weekly,
+                    "availability_perc"=>round($availability_perc,2),
+                    "performance_perc"=> round($performance_perc,2),
+                    "quality_perc"=> round($quality_perc,2),
+                    "oee_perc"=> round($oee_perc,2),
+                );
+        
 
-            array_push($Oee_history, $Oee_history_item);
+                array_push($Oee_history, $Oee_history_item);
         }
 
      }else if(  $stmt1 == 'ALL_MONTHLY' ){
@@ -195,7 +195,6 @@ $num = $stmt->rowCount();
                 "quality_perc"=> round($quality_perc,2),
                 "oee_perc"=> round($oee_perc,2),
             );
-    
 
             array_push($Oee_history, $Oee_history_item);
         }
@@ -206,6 +205,7 @@ $num = $stmt->rowCount();
             // extract row
             // this will make $row['name'] to
             // just $name only
+
             extract($row);
      
             $Oee_history_item=array(
@@ -228,7 +228,6 @@ $num = $stmt->rowCount();
                 "oee_perc"=> round($oee_perc,2),
             );
     
-
             array_push($Oee_history, $Oee_history_item);
         }
          

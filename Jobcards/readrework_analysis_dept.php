@@ -8,18 +8,18 @@ header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Ac
 // database connection will be here
 // include database and object files
 include_once '../Config/database.php';
-include_once '../Objects/Rejection_analysis_dept.php';
+include_once '../Objects/Rework_analysis_dept.php';
  
 // instantiate database and product object
 $database = new Database();
 $db = $database->getConnection();
  
 // initialize object
-$Rejection_analysis_dept = new Rejection_analysis_dept($db);
+$Rework_analysis_dept = new Rework_analysis_dept($db);
 
 // query products
-$stmt = $Rejection_analysis_dept->read();
-$stmt1 = $Rejection_analysis_dept->read1();
+$stmt = $Rework_analysis_dept->read();
+$stmt1 = $Rework_analysis_dept->read1();
 $num = $stmt->rowCount();
 // $num1 = $stmt1->rowCount();
 
@@ -28,8 +28,8 @@ $num = $stmt->rowCount();
 if($num>0){
  
     // products array
-    $Rejection_analysis_dept_arr=array();
-    $Rejection_analysis_dept_arr1=array();
+    $Rework_analysis_dept_arr=array();
+    $Rework_analysis_dept_arr1=array();
 
     // retrieve our table contents
     // fetch() is faster than fetchAll()
@@ -42,16 +42,16 @@ if($num>0){
          
        extract($row);
 
-        // $Rejection_analysis_dept_arr_item=array(
+        // $Rework_analysis_dept_arr_item=array(
         //     "date" =>$datee,
         //     "batch_no" =>$batch_no,
         //     "fg_code" =>$fg_code,
         //     "type" =>$type,
         //     "st_qty" =>$st_qty,
         //     "apprvd_qty" =>$apprvd_qty,
-        //     "tot_rej" => ($st_qty - $apprvd_qty) ,
-        //     "inprocess_rej" =>(($st_qty - $apprvd_qty)-($final_insp_rej)),
-        //     "final_insp_rej" =>$final_insp_rej,
+        //     "tot_rew" => ($st_qty - $apprvd_qty) ,
+        //     "inprocess_rew" =>(($st_qty - $apprvd_qty)-($final_insp_rew)),
+        //     "final_insp_rew" =>$final_insp_rew,
         //     "yield" =>$yield,
 
         //     "STRAIGHT_CUT" =>$STRAIGHT_CUT,
@@ -78,16 +78,16 @@ if($num>0){
         //     "EDM" =>$EDM,
         // );
  
-        $Rejection_analysis_dept_arr_item=array(
+        $Rework_analysis_dept_arr_item=array(
                 $datee,
                 $batch_no,
                 $fg_code,
                 $type,
                 $st_qty,
                 $apprvd_qty,
-                $tot_rej = ((int)$st_qty - (int)$apprvd_qty) ,
-                $final_insp_rej,
-                $inprocess_rej = (((int)$st_qty - (int)$apprvd_qty)-((int)$final_insp_rej)),
+                $tot_rew,
+                $final_insp_rew,
+                $inprocess_rew = (((int)$tot_rew -(int)$final_insp_rew)),
                 $yield,
     
                 $STRAIGHT_CUT,
@@ -114,7 +114,7 @@ if($num>0){
                 $EDM,
             );
 
-        array_push($Rejection_analysis_dept_arr, $Rejection_analysis_dept_arr_item);
+        array_push($Rework_analysis_dept_arr, $Rework_analysis_dept_arr_item);
     }
 
     while ($row = $stmt1->fetch(PDO::FETCH_ASSOC)){
@@ -125,16 +125,16 @@ if($num>0){
          
        extract($row);
 
-        // $Rejection_analysis_dept_arr_item=array(
+        // $Rework_analysis_dept_arr_item=array(
         //     "date" =>$datee,
         //     "batch_no" =>$batch_no,
         //     "fg_code" =>$fg_code,
         //     "type" =>$type,
         //     "st_qty" =>$st_qty,
         //     "apprvd_qty" =>$apprvd_qty,
-        //     "tot_rej" => ($st_qty - $apprvd_qty) ,
-        //     "inprocess_rej" =>(($st_qty - $apprvd_qty)-($final_insp_rej)),
-        //     "final_insp_rej" =>$final_insp_rej,
+        //     "tot_rew" => ($st_qty - $apprvd_qty) ,
+        //     "inprocess_rew" =>(($st_qty - $apprvd_qty)-($final_insp_rew)),
+        //     "final_insp_rew" =>$final_insp_rew,
         //     "yield" =>$yield,
 
         //     "STRAIGHT_CUT" =>$STRAIGHT_CUT,
@@ -161,16 +161,16 @@ if($num>0){
         //     "EDM" =>$EDM,
         // );
  
-        $Rejection_analysis_dept_arr_item1=array(
+        $Rework_analysis_dept_arr_item1=array(
                 $datee,
                 $batch_no,
                 $fg_code,
                 $type,
                 $st_qty,
                 $apprvd_qty,
-                $tot_rej = ((int)$st_qty - (int)$apprvd_qty) ,
-                $final_insp_rej,
-                $inprocess_rej = (((int)$st_qty - (int)$apprvd_qty)-((int)$final_insp_rej)),
+                $tot_rew,
+                $final_insp_rew,
+                $inprocess_rew = (((int)$tot_rew -(int)$final_insp_rew)),
                 $yield,
     
                 $STRAIGHT_CUT,
@@ -197,10 +197,10 @@ if($num>0){
                 $EDM,
             );
 
-        array_push($Rejection_analysis_dept_arr1, $Rejection_analysis_dept_arr_item1);
+        array_push($Rework_analysis_dept_arr1, $Rework_analysis_dept_arr_item1);
     }
 
-    $result = array_merge($Rejection_analysis_dept_arr1,$Rejection_analysis_dept_arr);
+    $result = array_merge($Rework_analysis_dept_arr1,$Rework_analysis_dept_arr);
 
     // set response code - 200 OK
     http_response_code(200);

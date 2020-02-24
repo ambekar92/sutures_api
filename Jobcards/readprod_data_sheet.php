@@ -40,6 +40,12 @@ if($num>0){
         // this will make $row['name'] to
         // just $name only
         extract($row);
+
+        if($DEPT_CODE=='103021'){
+            $Packed_doz = round(($OK_QTY/12),0);
+        }else{
+            $Packed_doz = 0;
+        }
  
         $Prod_data_sheet_item[]=array(
             "Department" => $DEPT,
@@ -55,7 +61,7 @@ if($num>0){
             "Time_from"=> $TIME_FROM,
             "Time_to"=> $TIME_TO,
             "Duration"=> $duration,
-        
+            "Packed_doz"=> $Packed_doz,
         );
  
         //array_push($Prod_data_sheet_arr, $Prod_data_sheet_item);
